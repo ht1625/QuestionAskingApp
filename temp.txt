@@ -1,0 +1,53 @@
+<SafeAreaView style={styles.container}>
+      <View style={{ width: "100%", height: 30, backgroundColor: "#1d3c45", marginTop: 50 }}>
+        <Text>HTS</Text>
+        <Text>Admin</Text>
+      </View>
+      <Text style={{ color: "#1d3c45", fontSize: 20, fontWeight: "700", marginTop: 200 }}>Hello HTS</Text>
+      <Image source={require("./images/secret-of-mobile-apps.jpg")} style={{ width: 250, height: 150, paddingBottom: 50, resizeMode: "center" }} blurRadius={1} />
+      <TouchableHighlight onPress={() => console.log("click!")}>
+        <View style={{ width: 230, height: 75, backgroundColor: 'gray' }}></View>
+      </TouchableHighlight>
+      <TouchableOpacity>
+        <Image source={require("./images/secret-of-mobile-apps.jpg")} style={{ width: 250, height: 150, paddingBottom: 50, resizeMode: "center" }} blurRadius={1} />
+      </TouchableOpacity>
+      <TextInput style={{ width:250, height:50, borderWidth:1 }} value={text} onChangeText={setText}></TextInput>
+      <Text>{text}</Text>
+    </SafeAreaView>
+
+
+
+    /*
+<View style={{ width: "100%", height: 30, backgroundColor: "#1d3c45", marginTop: 50 }}>
+        <Text style={stylesText.text}>HTS {Dimensions.get("screen")}</Text>
+        <Text style={stylesText.text}>Admin {Platform.OS}</Text>
+      </View>
+      <Text style={{ color: "#1d3c45", fontSize: 20, fontWeight: "700", marginTop: 20 }}>Hello HTS</Text>
+      <Image source={require("./images/secret-of-mobile-apps.jpg")} style={{ width: 250, height: 50, paddingBottom: 50, resizeMode: "center" }} blurRadius={1} />
+      <TouchableHighlight onPress={() => console.log("click!")}>
+        <View style={{ width: 230, height: 20, backgroundColor: 'gray' }}></View>
+      </TouchableHighlight>
+      <TouchableOpacity>
+        <Image source={require("./images/secret-of-mobile-apps.jpg")} style={{ width: 250, height: 50, paddingBottom: 50, resizeMode: "center" }} blurRadius={1} />
+      </TouchableOpacity>
+      <TextInput style={{ width:250, height:50, borderWidth:1 }} value={text} onChangeText={setText} keyboardType="email-address"></TextInput>
+      <Text>{text}</Text>
+      <Button title='Press Me!' onPress={() => Alert.alert("Hello " + text, " is it fun?", [{text:"Yes", onPress: () => console.log("Yes")}, {text:"All Right", onPress: () => console.log("All Right!")}])}/>
+      <ScrollView style={{ borderColor:"blue", borderWidth:2 }}>
+        {
+          data.map(
+            item => <View style={{ alignItems:'center' }} key={item.id}>
+                      <Text style={{ fontSize:15, borderColor:"white", borderWidth:1, padding:5 }}>{item.title}</Text>
+                      <Image source={{uri:item.url}} style={{ width:250, height:30, margin:10 }}/>
+                    </View>
+          )
+        }
+      </ScrollView>
+      <FlatList 
+        style={{ borderColor:"red", borderWidth:2 }}
+        keyExtractor={item=>item.id}
+        data={data} 
+        renderItem={({item})=> <Text  style={{ width:250, height:30, margin:10, fontSize:20 }}>{item.title}</Text>}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={_onRefresh}/>}
+      />
+      */
