@@ -13,13 +13,87 @@ import {
 import styles from "../assets/style";
 import {useNavigation} from "@react-navigation/native";
 import { useState } from 'react';
+//import axios from 'axios';
 
 export default LoginScreen = () => {
 
   const navigation = useNavigation();
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  //const isHermes = () => !!global.HermesInternal;
 
-  const onLoginPress = () => {};
+  const onLoginPress = () => {
+
+    const requestData = {
+      username: username,
+      password: password,
+      appType: "LECTURER"
+    };
+
+    /*const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        username: username,
+        password: password,
+        appType: "LECTURER"
+      })
+    };
+
+    fetch('http://localhost:8082/api/v1/user/login/', requestData)
+    .then((res) => res.json()) // gelen datayı parse ediyoruz
+    .catch((error) => {
+      console.log(error);
+    });*/
+
+
+              
+    /*const express = require('express');
+    const cors = require('cors');
+
+    const app = express();
+
+    // 👇️ configure CORS
+    app.use(cors());
+
+    app.get('/products/:id', function (req, res, next) {
+      res.json({msg: 'This is CORS-enabled for all origins!'});
+    });
+
+    const PORT = 3456;
+
+    app.listen(PORT, function () {
+      console.log(`CORS-enabled web server listening on port ${PORT}`);
+    });
+
+
+    axios.post('http://localhost:8082/api/v1/user/login', requestData)
+      .then(function (response) {
+          console.log(response);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });*/
+
+
+      //temp
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          username: username,
+          password: password,
+          appType: "LECTURER"
+        })
+      };
+  
+      fetch('https://jsonplaceholder.typicode.com/users')
+      .then((res) => res.json()) // gelen datayı parse ediyoruz
+      .catch((error) => {
+        console.log(error);
+      });
+
+  };
 
   return (
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">
@@ -29,8 +103,8 @@ export default LoginScreen = () => {
               <Text style={styles.logoText}>QuAsk Login</Text>
               <Image style={styles.image} source={require("../assets/Questions_And_Answers-512.webp")} />
               <StatusBar style="auto" />
-              <TextInput placeholder="Username" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-              <TextInput value={username} onChangeText={setUsername} placeholder="Password" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
+              <TextInput placeholder="Username" value={username} onChangeText={setUsername} placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+              <TextInput placeholder="Password" value={password} onChangeText={setPassword} placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
               <Button style={styles.loginButton} onPress={onLoginPress} title="Login" />
               <Button style={{ color:'white', backgroundColor:'red' }} onPress={() => navigation.navigate("Register", {username: username})} title="Register" />
             </View>
