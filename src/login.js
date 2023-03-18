@@ -9,6 +9,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Alert
 } from 'react-native';
 import styles from "../assets/style";
 import {useNavigation} from "@react-navigation/native";
@@ -30,7 +31,7 @@ export default LoginScreen = () => {
       appType: "LECTURER"
     };
 
-    /*const requestOptions = {
+    const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -40,13 +41,19 @@ export default LoginScreen = () => {
       })
     };
 
-    fetch('http://localhost:8082/api/v1/user/login/', requestData)
-    .then((res) => res.json()) // gelen datayı parse ediyoruz
+    fetch('http://192.168.1.69:8082/api/v1/user/login/', requestData)
+    .then(response => {
+      response.json()
+          .then(data => {
+              Alert.alert("Post created at : ", 
+              data.jwtToken);
+          });
+    })
     .catch((error) => {
       console.log(error);
-    });*/
+    });
 
-
+    //console.log(res);
               
     /*const express = require('express');
     const cors = require('cors');
@@ -74,24 +81,6 @@ export default LoginScreen = () => {
       .catch(function (error) {
           console.log(error);
       });*/
-
-
-      //temp
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          username: username,
-          password: password,
-          appType: "LECTURER"
-        })
-      };
-  
-      fetch('https://jsonplaceholder.typicode.com/users')
-      .then((res) => res.json()) // gelen datayı parse ediyoruz
-      .catch((error) => {
-        console.log(error);
-      });
 
   };
 
