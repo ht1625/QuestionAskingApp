@@ -13,11 +13,12 @@ import {
 } from 'react-native';
 import styles from "../assets/style";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../src/AuthContext';
 //import { useHistory } from 'react-router-dom';
 //import axios from 'axios';
 
-export default LoginScreen = () => {
+export default LoginScreen = (props) => {
 
   const navigation = useNavigation();
   //const useHistory = useHistory();
@@ -32,7 +33,8 @@ export default LoginScreen = () => {
       appType: "LECTURER"
     };
 
-    const jwtToken = null;
+    const jwtToken = "Husniye";
+    const authContext = useContext(AuthContext);
 
     const requestOptions = {
       method: 'POST',
@@ -44,13 +46,27 @@ export default LoginScreen = () => {
       })
     };
     //console.log(requestData);
-    fetch('http://192.168.1.156:8082/api/v1/user/login/', requestOptions)
+    fetch('http://192.168.1.156:8082/api/v1/user/login', requestOptions)
       .then(response => {
         response.json()
           .then(data => {
             Alert.alert("Post created at : ",
               data.jwtToken);
-            jwtToken = data.jwtToken;
+              authContext.setAuthState({
+                jwtToken: data.jwtToken,
+                authenticated: true,
+              });
+              try {
+                 AsyncStorage.setItem(
+                  'token',
+                  JSON.stringify({
+                    jwtToken,
+                    refreshToken,
+                  }),
+                )
+              } catch (e) {
+                console.log("error while jwt token stored", e);
+              }
           });
       })
       .catch((error) => {
@@ -58,8 +74,15 @@ export default LoginScreen = () => {
       });
 
       console.log(jwtToken);
+      //navigation.navigate("Homepage",{jwtToken: jwtToken});
 
-      navigation.push('homepage',jwtToken);
+      try {
+         AsyncStorage.getItem('token').then((e) => {
+          console.log(e);
+        })
+      } catch (e) {
+        console.log("error while getting jwt token", e);
+      }
   };
 
   return (
