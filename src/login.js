@@ -14,13 +14,13 @@ import {
 import styles from "../assets/style";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+//import { useHistory } from 'react-router-dom';
 //import axios from 'axios';
 
 export default LoginScreen = () => {
 
   const navigation = useNavigation();
-  const useHistory = useHistory();
+  //const useHistory = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -59,10 +59,7 @@ export default LoginScreen = () => {
 
       console.log(jwtToken);
 
-      history.pushState({
-        pathname: '/homepage',
-        state: jwtToken
-      });
+      navigation.push('homepage',jwtToken);
   };
 
   return (
