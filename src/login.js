@@ -40,25 +40,25 @@ export default LoginScreen = () => {
         appType: "LECTURER"
       })
     };
-   console.log(requestData);
-    fetch('http://192.168.1.69:8082/api/v1/user/login/', requestData)
-    /*.then(response => {
+   //console.log(requestData);
+    fetch('http://192.168.1.156:8082/api/v1/user/login/', requestOptions)
+    .then(response => {
       response.json()
           .then(data => {
               Alert.alert("Post created at : ", 
               data.jwtToken);
           });
-    })*/
-  .then((response) => response.json())
+    })
+  /*.then((response) => response.json())
   .then((responseData) => {
                            console.log("inside responsejson");
-                           console.log('response object:',responseData)
+                           console.log('response object:',responseData.jwtToken)
 
-   }).done();
+   }).done();*/
 
-   /* .catch((error) => {
+   .catch((error) => {
       console.log(error);
-    });*/
+    });
 
     //console.log(res);
               
