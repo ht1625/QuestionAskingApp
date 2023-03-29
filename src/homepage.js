@@ -20,7 +20,6 @@ import { useState, useContext } from 'react';
 
 export default HomepageScreen = () => {
 
-    //let token = "hts";
     async function getUserDetails() {
         let token = await AsyncStorage.getItem('@storage_token') //got this token from successful login
         //console.log(token)
