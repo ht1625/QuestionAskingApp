@@ -12,19 +12,19 @@ import {
   Alert
 } from 'react-native';
 import styles from "../assets/style";
-import { useNavigation } from "@react-navigation/native";
 import { useState, useContext } from 'react';
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../src/AuthContext';
-//import { useHistory } from 'react-router-dom';
-//import axios from 'axios';
+import homepage from './homepage';
 
 export default LoginScreen = (props) => {
 
   const navigation = useNavigation();
-  //const useHistory = useHistory();
+  const authContext = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  let token="";
   const onLoginPress = () => {
 
     const requestData = {
@@ -32,10 +32,6 @@ export default LoginScreen = (props) => {
       password: password,
       appType: "LECTURER"
     };
-
-    const jwtToken = "Husniye";
-    const authContext = useContext(AuthContext);
-
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -45,25 +41,28 @@ export default LoginScreen = (props) => {
         appType: "LECTURER"
       })
     };
-    //console.log(requestData);
+    console.log(requestData);
     fetch('http://192.168.1.156:8082/api/v1/user/login', requestOptions)
       .then(response => {
         response.json()
           .then(data => {
             Alert.alert("Post created at : ",
               data.jwtToken);
-              authContext.setAuthState({
-                jwtToken: data.jwtToken,
-                authenticated: true,
-              });
+           
+            token = data.jwtToken;
+            
               try {
-                 AsyncStorage.setItem(
+           
+                AsyncStorage.setItem(
                   'token',
                   JSON.stringify({
-                    jwtToken,
-                    refreshToken,
+                    token
                   }),
                 )
+                
+                navigation.navigate("Homepage",{jwtToken: token});
+
+              
               } catch (e) {
                 console.log("error while jwt token stored", e);
               }
@@ -72,18 +71,9 @@ export default LoginScreen = (props) => {
       .catch((error) => {
         console.log(error);
       });
-
-      console.log(jwtToken);
-      //navigation.navigate("Homepage",{jwtToken: jwtToken});
-
-      try {
-         AsyncStorage.getItem('token').then((e) => {
-          console.log(e);
-        })
-      } catch (e) {
-        console.log("error while getting jwt token", e);
-      }
+     
   };
+
 
   return (
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">

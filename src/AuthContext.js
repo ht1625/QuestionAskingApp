@@ -7,27 +7,24 @@ const { Provider } = AuthContext;
 const AuthProvider = ({ children }) => {
 
   const [authState, setAuthState] = useState({
-    accessToken: null,
-    refreshToken: null,
+    token: null,
     authenticated: null,
   });
 
 
   const getToken = async () => {
     try {
-      await AsyncStorage.getItem('token').then((e) => {
+    let token =  await AsyncStorage.getItem('token').then((e) => {
         setAuthState({
-          jwtToken: e.jwtToken || null,
-          refreshToken: e.refreshToken || null,
-          authenticated: e.jwtToken !== null,
+          token: e.token || null,
+          authenticated: e.token !== null,
         });
       })
 
     } catch (error) {
       console.log("storage error", error);
       setAuthState({
-        jwtToken: null,
-        refreshToken: null,
+        token: null,
         authenticated: false,
       });
     }
@@ -37,8 +34,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     await AsyncStorage.removeItem("token");
     setAuthState({
-      jwtToken: null,
-      refreshToken: null,
+      token: null,
       authenticated: false,
     });
     console.log("çıktın bro");
@@ -48,20 +44,23 @@ const AuthProvider = ({ children }) => {
 
 
   const getAccessToken = () => {
-    return authState.accessToken;
+    return authState.token;
   };
-
+  useEffect(() => {
+    getAccessToken();
+  }, [])
   return (
-    <Provider
+    <AuthContext.Provider
       value={{
         authState,
+        token,
         getAccessToken,
         setAuthState,
         logout,
         getToken
       }}>
       {children}
-    </Provider>
+    </AuthContext.Provider>
   );
 };
 
