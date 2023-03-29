@@ -20,14 +20,13 @@ import { useState, useContext } from 'react';
 
 export default HomepageScreen = () => {
 
+    //let token = "hts";
     async function getUserDetails() {
-        const token = await AsyncStorage.getItem('@storage_token') //got this token from successful login
-        console.log(token);
+        let token = await AsyncStorage.getItem('@storage_token') //got this token from successful login
+        //console.log(token)
     }
-    //getUserDetails();
+    getUserDetails();
 
-    const jsonValue = AsyncStorage.getItem('@storage_token')
-    const value = null ? JSON.parse(jsonValue) : null;
     
     
     //const { state } = useLocation();
@@ -37,8 +36,8 @@ export default HomepageScreen = () => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.loginScreenContainer}>
                     <View style={styles.loginFormView}>
-                        <Text style={styles.logoText}>QuAsk {{ value }} Homepage</Text>
-                        <Text style={styles.logoText}></Text> {/*{route.params.jwtToken}*/}
+                        <Text style={styles.logoText}>QuAsk Homepage</Text>
+                        <Text style={styles.logoText}>{token}</Text>
                         <Image style={styles.image} source={require("../assets/Questions_And_Answers-512.webp")} />
                         <StatusBar style="auto" />
                     </View>
