@@ -23,6 +23,13 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         textAlign: "center",
     },
+    logoText2: {
+        fontSize: 8,
+        fontWeight: "400",
+        marginTop: 50,
+        marginBottom: 40,
+        textAlign: "center",
+    },
     loginFormView: {
         flex: 1,
     },
@@ -53,8 +60,10 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 250,
-        height: 150,
-        marginBottom: 20
+        height: 200,
+        marginBottom: 20,
+        marginLeft: 60,
+        marginTop: 40
     }
 });
 export default styles;

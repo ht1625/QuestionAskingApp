@@ -36,7 +36,7 @@ export default HomepageScreen = () => {
                 <View style={styles.loginScreenContainer}>
                     <View style={styles.loginFormView}>
                         <Text style={styles.logoText}>QuAsk Homepage</Text>
-                        <Text style={styles.logoText}>{token}</Text>
+                        <Text style={styles.logoText1}>{token}</Text>
                         <Image style={styles.image} source={require("../assets/Questions_And_Answers-512.webp")} />
                         <StatusBar style="auto" />
                     </View>
