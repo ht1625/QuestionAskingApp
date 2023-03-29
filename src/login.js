@@ -42,7 +42,7 @@ export default LoginScreen = (props) => {
       })
     };
     console.log(requestData);
-    fetch('http://192.168.1.156:8082/api/v1/user/login', requestOptions)
+    fetch('http://192.168.1.69:8082/api/v1/user/login', requestOptions)
       .then(response => {
         response.json()
           .then(data => {
@@ -51,21 +51,15 @@ export default LoginScreen = (props) => {
            
             token = data.jwtToken;
             
-              try {
-           
-                AsyncStorage.setItem(
-                  'token',
-                  JSON.stringify({
-                    token
-                  }),
-                )
-                
-                navigation.navigate("Homepage",{jwtToken: token});
-
-              
+              try {         
+                const jsonValue = JSON.stringify(token)
+                AsyncStorage.setItem('@storage_token', jsonValue)             
               } catch (e) {
                 console.log("error while jwt token stored", e);
               }
+
+              navigation.navigate("Homepage"); // ,{jwtToken: token}
+              
           });
       })
       .catch((error) => {
