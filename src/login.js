@@ -15,55 +15,30 @@ import styles from "../assets/style";
 import { useState, useContext } from 'react';
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AuthContext } from '../src/AuthContext';
-import homepage from './homepage';
+import {user_login,logout} from '../src/api/user_api';
 
 export default LoginScreen = (props) => {
 
   const navigation = useNavigation();
-  const authContext = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  let token="";
+
   const onLoginPress = () => {
 
-    const requestData = {
-      username: username,
+    user_login({
+      username: username.toLocaleLowerCase(),
       password: password,
       appType: "LECTURER"
-    };
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-        appType: "LECTURER"
+    })
+      .then(result => {
+        if (result.status == 201) {
+    
+          AsyncStorage.setItem('token', result.data.jwtToken);
+          navigation.navigate('Homepage');
+        }
       })
-    };
-    console.log(requestData);
-    fetch('http://192.168.1.69:8082/api/v1/user/login', requestOptions)
-      .then(response => {
-        response.json()
-          .then(data => {
-            Alert.alert("Post created at : ",
-              data.jwtToken);
-           
-            token = data.jwtToken;
-            
-              try {         
-                const jsonValue = JSON.stringify(token)
-                AsyncStorage.setItem('@storage_token', jsonValue)             
-              } catch (e) {
-                console.log("error while jwt token stored", e);
-              }
-
-              navigation.navigate("Homepage"); // ,{jwtToken: token}
-              
-          });
-      })
-      .catch((error) => {
-        console.log(error);
+      .catch(err => {
+        console.error(err);
       });
      
   };

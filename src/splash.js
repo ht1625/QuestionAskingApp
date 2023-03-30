@@ -1,22 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect} from 'react';
-import { useNavigation } from "@react-navigation/native";
-
 import {StyleSheet, Text, View} from 'react-native';
 
-export default function Splash({}) {
+export default function Splash({navigation}) {
   useEffect(() => {
     setTimeout(() => {
       handleGetToken();
     }, 2000);
   });
-  const navigation = useNavigation();
+
   const handleGetToken = async () => {
     const dataToken = await AsyncStorage.getItem('token');
     if (!dataToken) {
-      navigation.navigate('Login');
+      navigation.replace('Login');
     } else {
-      navigation.navigate('Homepage');
+      navigation.replace('Homepage');
     }
   };
 

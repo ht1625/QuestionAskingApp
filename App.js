@@ -1,4 +1,17 @@
-import React from "react";
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import Routers from './src/routers';
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Routers />
+    </NavigationContainer>
+  );
+};
+export default App;
+
+/*import React from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import LoginScreen from "./src/login";
@@ -8,7 +21,7 @@ import Splash from "./src/splash";
 
 
 const stack = createNativeStackNavigator()
-
+7*
 export default function App() {
   return (
     <NavigationContainer>
@@ -20,4 +33,4 @@ export default function App() {
       </stack.Navigator>
     </NavigationContainer>
   );
-}
+}*/
