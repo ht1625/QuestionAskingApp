@@ -11,7 +11,6 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import styles from '../assets/style';
-//import { useLocation } from 'react-router-dom';
 import {useNavigation, useRoute} from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useContext } from 'react';

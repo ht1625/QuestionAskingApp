@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { BackHandler, Dimensions, Image, ImageBackground, StatusBar, StyleSheet, Text, View, } from 'react-native';
 
+const { width, height } = Dimensions.get("window");
 export default function Splash({navigation}) {
   useEffect(() => {
     setTimeout(() => {
@@ -20,20 +21,28 @@ export default function Splash({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Splash</Text>
+      <StatusBar hidden={true} barStyle="dark-content" />
+      <ImageBackground source={require("../assets/images/splash-bg.png")} resizeMode="cover" style={styles.image}>
+    
+      </ImageBackground>
     </View>
-  );
+  )
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'black',
   },
-  text: {
-    fontWeight: '800',
-    fontSize: 30,
-    color: 'white',
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    width:width,
+    height:height
   },
+  logo: {
+    alignSelf: "center",
+    width: 195.65,
+    height: 74.39
+}
 });

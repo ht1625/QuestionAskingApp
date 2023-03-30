@@ -1,22 +1,27 @@
 import React from 'react';
+import { darkPurple, lightBlue } from './theme';
 import {
   Text,
   Image,
   StatusBar,
+  StyleSheet,
   View,
   TextInput,
-  Button,
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Alert
+  Alert,
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
-import styles from "../assets/style";
+import { Button, Input } from 'react-native-elements';
+
 import { useState, useContext } from 'react';
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {user_login,logout} from '../src/api/user_api';
 
+const { width, height } = Dimensions.get("window");
 export default LoginScreen = (props) => {
 
   const navigation = useNavigation();
@@ -32,7 +37,7 @@ export default LoginScreen = (props) => {
     })
       .then(result => {
         if (result.status == 201) {
-    
+          console.log("geliyor");
           AsyncStorage.setItem('token', result.data.jwtToken);
           navigation.navigate('Homepage');
         }
@@ -45,20 +50,75 @@ export default LoginScreen = (props) => {
 
 
   return (
-    <KeyboardAvoidingView style={styles.containerView} behavior="padding">
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.loginScreenContainer}>
-          <View style={styles.loginFormView}>
-            <Text style={styles.logoText}>QuAsk Login</Text>
-            <Image style={styles.image} source={require("../assets/Questions_And_Answers-512.webp")} />
-            <StatusBar style="auto" />
-            <TextInput placeholder="Username" value={username} onChangeText={setUsername} placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-            <TextInput placeholder="Password" value={password} onChangeText={setPassword} placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
-            <Button style={styles.loginButton} onPress={onLoginPress} title="Login" />
-            <Button style={{ color: 'white', backgroundColor: 'red' }} onPress={() => navigation.navigate("Register", { username: username })} title="Register" />
-          </View>
+    <KeyboardAvoidingView style={{ flex: 1, }}>
+      <View style={{ flex: 1, justifyContent: "space-between", padding: 25 }}>
+        <Image source={require("../assets/images/logo.png")} style={styles.logo} />
+        <View>
+          <Text style={{ fontSize: 18,marginLeft: 10 }}>Email</Text>
+          <Input
+            value = {username}
+            placeholder='example@example.com'
+            inputContainerStyle={{ borderBottomColor: darkPurple }}
+            onChangeText={  setUsername }
+            keyboardType="email-address" />
+          <Text style={{ fontSize: 18, marginLeft: 10 }}>Password</Text>
+          <Input
+            value = {password}
+            placeholder='• • • • • • • •'
+            inputContainerStyle={{ borderBottomColor: darkPurple }}
+            secureTextEntry={true}
+            onChangeText={ setPassword } />
         </View>
-      </TouchableWithoutFeedback>
+        <TouchableOpacity onPress={() => navigation.navigate("Register")} style={{ flexDirection: "row", alignSelf: "center", marginTop: 15 }}>
+          <Text style={{  fontSize: 14 }}>Bir hesabın yok mu? </Text>
+          <Text style={{  fontSize: 14 }}>Kaydol</Text>
+        </TouchableOpacity>
+        <Button  onPress={onLoginPress} title="Login" />
+        <View />
+   
+      </View>
     </KeyboardAvoidingView>
-  );
+
+  )
 }
+
+const styles = StyleSheet.create({
+  progressBarContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
+    marginTop: 15
+  },
+  proggressBarFirst: {
+    width: (width / 4) - 12,
+    height: 8,
+    marginRight: 4,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    backgroundColor: darkPurple
+  },
+  proggressBarLast: {
+    backgroundColor: lightBlue,
+    width: (width / 4) - 12,
+    height: 8,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  proggressBar: {
+    backgroundColor: lightBlue,
+    width: (width / 4) - 12,
+    height: 8,
+    marginRight: 4,
+  },
+  logo: {
+    alignSelf: "center",
+    width: 195.65,
+    height: 74.39
+  },
+  line: {
+    backgroundColor: darkPurple,
+    height: 1,
+    width: width - 30,
+    alignSelf: "center"
+  }
+});
+
