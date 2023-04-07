@@ -39,7 +39,7 @@ export default LoginScreen = (props) => {
         if (result.status == 201) {
           console.log("geliyor");
           AsyncStorage.setItem('token', result.data.jwtToken);
-          navigation.navigate('Homepage');
+          navigation.navigate('Welcome');
         }
       })
       .catch(err => {

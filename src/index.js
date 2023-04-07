@@ -2,4 +2,5 @@ import LoginScreen from "./login";
 import RegisterScreen from "./register";
 import HomepageScreen from "./homepage";
 import Splash from "./splash";
-export {Splash, LoginScreen, HomepageScreen,RegisterScreen};
+import Welcome from "./welcome";
+export {Splash, LoginScreen, HomepageScreen,RegisterScreen,Welcome};
