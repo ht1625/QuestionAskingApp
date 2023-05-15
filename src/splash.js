@@ -15,7 +15,7 @@ export default function Splash({navigation}) {
     if (!dataToken) {
       navigation.replace('Login');
     } else {
-      navigation.replace('Homepage');
+      navigation.replace('Tab');
     }
   };
 

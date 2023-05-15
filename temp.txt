@@ -51,3 +51,40 @@
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={_onRefresh}/>}
       />
       */
+
+
+
+
+
+      <View>
+            <StatusBar hidden={false} barStyle="dark-content" />
+            <ScrollView style={{}}>
+                <View style={styles.container}>
+                    <View style={Platform.OS === "ios" ? { ...styles.headerContainer, marginTop: 30 } : { ...styles.headerContainer }}>
+                        <Image source={require("../assets/images/logo.png")} style={styles.logo} />
+                        <Icon
+                            name='settings'
+                            type='simple-line-icon'
+                            color={darkPurple}
+                            style={{ alignSelf: "center" }}
+                        //onPress={() => props.navigation.navigate("Settings")}
+                        />
+                    </View>
+                    <View style={{ justifyContent: "center", alignSelf: "center", padding: 20 }}>
+                        <TouchableOpacity /*onPress={() => props.navigation.navigate("Solution")}*/ style={styles.questionContainer}>
+                            <View style={{ flexDirection: "row" }}>
+                                <Image resizeMode="cover" source={require("../assets/question.png")} style={styles.questionImage} />
+                                <View style={{ alignSelf: "center", marginLeft: 15 }}>
+                                    <Text style={{ marginBottom: 15 }}>dskjaşdk</Text>
+                                    <Text>dskjaşdk</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <Text style={{ marginBottom: 15, textAlign: "right" }}>10:53</Text>
+                                <Text>Değerlendirilmedi</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
+        </View>

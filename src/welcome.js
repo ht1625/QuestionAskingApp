@@ -27,7 +27,7 @@ export default welcome = (props) => {
                         <Text style={{ fontSize: 18, color: whiteColor }}>QueX’le soru çözmeye başla!</Text>
                     </View>
 
-                    <Button title="Başla" onPress={() => navigation.navigate("Homepage")} titleStyle={{ color: darkPurple, fontFamily: "Nunito-Bold" }} buttonStyle={{ backgroundColor: whiteColor }} containerStyle={{ backgroundColor: whiteColor, width: width * .6, paddingVertical: 5, alignSelf: "center", }} />
+                    <Button title="Başla" onPress={() => navigation.navigate("Tab")} titleStyle={{ color: darkPurple, fontFamily: "Nunito-Bold" }} buttonStyle={{ backgroundColor: whiteColor }} containerStyle={{ backgroundColor: whiteColor, width: width * .6, paddingVertical: 5, alignSelf: "center", }} />
                 </View>
             </ImageBackground>
 

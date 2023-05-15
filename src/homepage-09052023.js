@@ -7,7 +7,7 @@ import {profile,logout} from '../src/api/user_api';
 
 const { width, height } = Dimensions.get("window");
 
-export default HomepageScreen = (props) => {
+export default HomepageScreen = () => {
 
     const navigation = useNavigation();
 
@@ -25,11 +25,11 @@ export default HomepageScreen = (props) => {
                     <View style={ Platform.OS === "ios" ? {...styles.headerContainer, marginTop:30} : {...styles.headerContainer}}>
                         <Image source={require("../assets/images/logo.png")} style={styles.logo} />
                         <Icon
-                            name='help'
-                            type='help-outline'
+                            name='settings'
+                            type='simple-line-icon'
                             color={darkPurple}
                             style={{ alignSelf: "center" }}
-                            onPress={() => props.navigation.navigate("Help")}
+                            //onPress={() => props.navigation.navigate("Settings")}
                         />
                     </View>
                     <View style={{ justifyContent: "center", alignSelf: "center", padding: 20 }}>
