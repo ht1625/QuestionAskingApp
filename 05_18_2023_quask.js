@@ -5,13 +5,13 @@ import {
     TouchableOpacity,
     View,
     Image,
+    ScrollView,
     TextInput, 
     StyleSheet,
+    Button as RNPButton
 } from "react-native";
 import { Camera } from "expo-camera";
 import { Button } from "react-native-paper";
-import {sendQuestion} from '../src/api/sendQuestion';
-import * as ImageManipulator from 'expo-image-manipulator';
 
 const CameraModule = (props) => {
     const [cameraRef, setCameraRef] = useState(null);
@@ -63,16 +63,9 @@ const CameraModule = (props) => {
                         <TouchableOpacity
                             onPress={async () => {
                                 if (cameraRef) {
-                                    let photo = await cameraRef.takePictureAsync({ base64: true });
-                                    // resim sıkıştırma
-                                    const resizedPhoto = await ImageManipulator.manipulateAsync(
-                                        photo.uri,
-                                        [{ resize: { width: photo.width * 0.5, height: photo.height * 0.5 }}],
-                                        { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG, base64: true }
-                                    );
-                                    // finish
+                                    let photo = await cameraRef.takePictureAsync();
+                                    console.log(typeof(photo));
                                     props.setImage(photo);
-                                    props.setImageText(resizedPhoto);
                                     props.setModalVisible();
                                 }
                             }}
@@ -128,7 +121,6 @@ const CameraModule = (props) => {
 export default QuestionBoxScreen = () => {
 
     const [image, setImage] = useState(null);
-    const [imageText, setImageText] = useState(null);
     const [camera, setShowCamera] = useState(false);
     const [hasPermission, setHasPermission] = useState(null);
     //aşağısı kamera dışındakiler için
@@ -149,7 +141,7 @@ export default QuestionBoxScreen = () => {
         return <Text>No access to camera</Text>;
     }
 
-    // aşağısı kamera dışındaki alan için
+    //aşağısı kamera dışındaki alan için"
 
     const handleCourseSelection = (course) => {
         setSelectedCourse(course);
@@ -157,49 +149,40 @@ export default QuestionBoxScreen = () => {
 
     const handleSendQuestion = () => {
         // function to handle sending question to server
-        // comment, imageText, selectedCourse
-        console.log("Test");
-        sendQuestion({
-            //comment: comment,
-            question: image,
-            branch: selectedCourse,
-            //class: 11
-        })
-        .then(result => {
-            if (result.status == 201) {
-              console.log('Question sent');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        });        
-    };  
+        console.log('Question sent');
+    };
 
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>      
-            <Text style={styles.subTitle}>Define lesson of question</Text>
-            <View style={styles.container}>
-                {["BIOLOGY", "PHYSICS", "TURKISH", "CHEMISTRY", "MATH", "ENGLISH"].map((course, index) => (
-                    <View style={styles.buttonContainer} key={index}>
-                    <TouchableOpacity 
-                        style={selectedCourse === course ? styles.selectedCourse : styles.course}
-                        onPress={() => handleCourseSelection(course)}
-                    >
-                        <Text style={styles.text}>{course}</Text>
-                    </TouchableOpacity>
-                    </View>
-                ))}
-            </View>   
-            <Text style={styles.subTitle}>Take of photo for question</Text>        
-            <View style={{
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <View style={styles.courseSelectionContainer}>
+                <Text style={styles.subTitle}>Ders belirle</Text>
+                <Text style={styles.courseSelectionText}>Aşağıdaki listeden sorunun dersini seç:</Text>
+                <View style={styles.buttonContainer}>
+                    <RNPButton mode="contained" color="#FF5722" labelStyle={{color: '#FFF'}} onPress={() => handleCourseSelection('Ders 1')} title="Ders 1"></RNPButton>
+                    <RNPButton mode="contained" color="#FF5722" labelStyle={{color: '#FFF'}} onPress={() => handleCourseSelection('Ders 2')} title="Ders 2"></RNPButton>
+                    <RNPButton mode="contained" color="#FF5722" labelStyle={{color: '#FFF'}} onPress={() => handleCourseSelection('Ders 3')} title="Ders 3"></RNPButton>
+                    <RNPButton mode="contained" color="#FF5722" labelStyle={{color: '#FFF'}} onPress={() => handleCourseSelection('Ders 4')} title="Ders 4"></RNPButton>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <RNPButton mode="contained" color="#FF5722" labelStyle={{color: '#FFF'}} onPress={() => handleCourseSelection('Ders 5')} title="Ders 5"></RNPButton>
+                    <RNPButton mode="contained" color="#FF5722" labelStyle={{color: '#FFF'}} onPress={() => handleCourseSelection('Ders 6')} title="Ders 6"></RNPButton>
+                    <RNPButton mode="contained" color="#FF5722" labelStyle={{color: '#FFF'}} onPress={() => handleCourseSelection('Ders 7')} title="Ders 7"></RNPButton>
+                </View>
+            </View>              
+            <View
+                style={{
                     backgroundColor: "#eeee",
                     width: 120,
                     height: 120,
                     borderRadius: 100,
                     marginBottom: 2,
-                    marginTop: 10,
-                }}>
-                <Image source={{ uri: image }} style={{ width: 120, height: 120, borderRadius: 20 }}/>
+                    marginTop: 60
+                }}
+            >
+                <Image
+                    source={{ uri: image }}
+                    style={{ width: 120, height: 120, borderRadius: 20 }}
+                />
             </View>
             <Button
                 style={{ width: "30%", marginTop: 12 }}
@@ -207,17 +190,19 @@ export default QuestionBoxScreen = () => {
                 mode="contained"
                 onPress={() => {
                     setShowCamera(true);
-                }}> Camera </Button>
+                }}
+            >
+                Camera
+            </Button>
             {camera && (
                 <CameraModule
                     showModal={camera}
                     setModalVisible={() => setShowCamera(false)}
                     setImage={(result) => setImage(result.uri)}
-                    setImageText={(result) => setImageText(result.base64)}
                 />
             )}     
             <View style={styles.commentContainer}>
-                <Text style={styles.subTitle}>Write comment If you want</Text>
+                <Text style={styles.subTitle}>Yorumun isteğe bağlı</Text>
                 <TextInput
                     style={styles.commentInput}
                     multiline={true}
@@ -227,7 +212,7 @@ export default QuestionBoxScreen = () => {
                 />
             </View>   
             <TouchableOpacity onPress={() => handleSendQuestion()} style={styles.sendButton}>
-                <Text style={styles.sendButtonText}>Send Question</Text>
+                <Text style={styles.sendButtonText}>Soruyu Gönder</Text>
             </TouchableOpacity>
         </View>
     );
@@ -235,36 +220,66 @@ export default QuestionBoxScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        alignItems: "center",
-        marginBottom: 0
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 16,
+      marginTop: 0
+    },
+    navbar: {
+        height: 60,
+        backgroundColor: '#2196F3',
+        justifyContent: 'center',
+        paddingHorizontal: 10
+    },
+    navbarTitle: {
+        color: '#FFF',
+        fontSize: 20,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginTop: 0,
+    },
+    courseSelectionContainer: {
+      marginBottom: 20,
+      padding: 0,
+      marginTop: 0
     },
     subTitle: {
       fontSize: 18,
       fontWeight: 'bold',
       marginBottom: 8,
-      marginTop: 20
     },
     courseSelectionText: {
       fontSize: 16,
       marginBottom: 8,
     },
+    courseButtonsContainer: {
+      flexDirection: 'row',
+      marginBottom: 12,
+    },
+    courseButton: {
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 4,
+      marginRight: 8,
+    },
+    courseButtonText: {
+      color: 'white',
+    },
     commentContainer: {
-      marginBottom: 20,   
-      justifyContent: "center",
-      alignItems: "center",
+      marginBottom: 20,
     },
     commentInput: {
       height: 100,
       backgroundColor: '#E0E0E0',
-      paddingHorizontal: 70,
+      paddingHorizontal: 12,
       paddingTop: 8,
       marginBottom: 8,
     },
     sendButton: {
-      backgroundColor: '#008000',
+      backgroundColor: '#2196F3',
       paddingHorizontal: 16,
       paddingVertical: 10,
       borderRadius: 4,
@@ -275,38 +290,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
     },
     buttonContainer: {
-        width: '30%',
-        height: 50,
-        padding: 5,
-    },
-    course: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: "#000",
-        borderRadius: 7,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    selectedCourse: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: "#000",
-        borderRadius: 7,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#2196F3',
-        color: '#FFFFFF'
-    },
-    text: {
-        color: "#000",
+        flexDirection: "row",
+        justifyContent: 'space-between',
     },
 });
-    
-    
-    
-    
-    
-    
-    
-  
-  

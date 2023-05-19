@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { Button } from 'react-native-paper';
+import {logout} from '../src/api/user_api';
 
 const ProfileTableRow = ({ title, value }) => {
     return (
@@ -15,7 +17,7 @@ const ProfileTableRow = ({ title, value }) => {
     );
 };
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
     const navigation = useNavigation();
     const route = useRoute();
 
@@ -29,6 +31,11 @@ const ProfileScreen = () => {
         imageUrl: 'https://media.licdn.com/dms/image/C4D03AQEYqZsobyzzYA/profile-displayphoto-shrink_800_800/0/1662841589971?e=1689206400&v=beta&t=-XidWGK7XCcpGZXleqsgjNh2bvs6EEKDrIIWYqb-C-Q',
     };
 
+    const Logout = () => {
+        logout();
+        navigation.navigate('Login');
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.profile}>
@@ -40,6 +47,7 @@ const ProfileScreen = () => {
                 <ProfileTableRow title="Grade" value={studentData.grade} />
                 <ProfileTableRow title="Question Count" value={studentData.questionCount} />
             </View>
+            <Button style={{ backgroundColor:'#D3D3D3',width:100, marginBottom:10, color:'#000000', marginLeft:270 }} onPress={() => Logout()}>Logout</Button>
         </View>
     );
 };

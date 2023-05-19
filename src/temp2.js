@@ -1,167 +1,89 @@
-import React, { useState, useEffect } from "react";
-import {
-    Modal,
-    Text,
-    TouchableOpacity,
-    View,
-    Image,
-} from "react-native";
-import { Camera } from "expo-camera";
-import { Button } from "react-native-paper";
+import React, { useState } from 'react';
+import { Text, View, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 
-const CameraModule = (props) => {
-    const [cameraRef, setCameraRef] = useState(null);
-    const [type, setType] = useState(Camera.Constants.Type.back);
+export default QuestionBoxScreen = () => {
+
+    const [selectedCourse, setSelectedCourse] = useState('');
+    const [comment, setComment] = useState('');
+
+    const courses = [
+        { id: 1, name: 'Course 1' },
+        { id: 2, name: 'Course 2' },
+        { id: 3, name: 'Course 3' },
+        { id: 4, name: 'Course 4' },
+        { id: 5, name: 'Course 5' },
+        { id: 6, name: 'Course 6' },
+        { id: 7, name: 'Course 7' },
+        { id: 8, name: 'Course 8' },
+        { id: 9, name: 'Course 9' },
+        { id: 10, name: 'Course 10' },
+    ];
+
+    const handleSendQuestion = () => {
+        // function to handle sending question to server
+        console.log('Question sent');
+    };
+
+    const handleCourseSelection = (course) => {
+        setSelectedCourse(course);
+    };
+
     return (
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={true}
-            onRequestClose={() => {
-                props.setModalVisible();
-            }}
-        >
-            <Camera
-                style={{ flex: 1 }}
-                ratio="16:9"
-                flashMode={Camera.Constants.FlashMode.on}
-                type={type}
-                ref={(ref) => {
-                    setCameraRef(ref);
-                }}
-            >
-                <View
-                    style={{
-                        flex: 1,
-                        backgroundColor: "transparent",
-                        justifyContent: "flex-end",
-                    }}
-                >
-                    <View
-                        style={{
-                            backgroundColor: "black",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <Button
-                            icon="close"
-                            style={{ marginLeft: 12 }}
-                            mode="outlined"
-                            color="white"
-                            onPress={() => {
-                                props.setModalVisible();
-                            }}
-                        >
-                            Close
-                        </Button>
+        <View style={styles.container}>
+            <Text style={styles.title}>Soru Sor</Text>
+            <View>
+                <Text>Resim yükle</Text>
+            </View>
+            <View style={styles.courseSelectionContainer}>
+                <Text style={styles.subTitle}>Ders belirle</Text>
+                <Text style={styles.courseSelectionText}>Aşağıdaki listeden sorunun dersini seç:</Text>
+                <ScrollView horizontal={true} style={styles.courseButtonsContainer}>
+                    {courses.map((course) => (
                         <TouchableOpacity
-                            onPress={async () => {
-                                if (cameraRef) {
-                                    let photo = await cameraRef.takePictureAsync();
-                                    props.setImage(photo);
-                                    props.setModalVisible();
-                                }
-                            }}
-                        >
-                            <View
-                                style={{
-                                    borderWidth: 2,
-                                    borderRadius: 50,
-                                    borderColor: "white",
-                                    height: 80,
-                                    width: 80,
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginBottom: 16,
-                                    marginTop: 8,
-                                }}
-                            >
-                                <View
-                                    style={{
-                                        borderWidth: 2,
-                                        borderRadius: 20,
-                                        borderColor: "white",
-                                        height: 60,
-                                        width: 60,
-                                        backgroundColor: "white",
-                                    }}
-                                ></View>
-                            </View>
+                            key={course.id}
+                            onPress={() => handleCourseSelection(course.name)}
+                            style={[
+                                styles.courseButton,
+                                { backgroundColor: course.name === selectedCourse ? '#2196F3' : '#E0E0E0' },
+                            ]}>
+                            <Text style={styles.courseButtonText}>{course.name}</Text>
                         </TouchableOpacity>
-                        <Button
-                            icon="axis-z-rotate-clockwise"
-                            style={{ marginRight: 12 }}
-                            mode="outlined"
-                            color="white"
-                            onPress={() => {
-                                setType(
-                                    type === Camera.Constants.Type.back
-                                        ? Camera.Constants.Type.front
-                                        : Camera.Constants.Type.back
-                                );
-                            }}
-                        >
-                            {type === Camera.Constants.Type.back ? "Front" : "Back "}
-                        </Button>
-                    </View>
-                </View>
-            </Camera>
-        </Modal>
+                    ))}
+                </ScrollView>
+            </View>
+            <View style={styles.commentContainer}>
+                <Text style={styles.subTitle}>Yorumun isteğe bağlı</Text>
+                <TextInput
+                    style={styles.commentInput}
+                    multiline={true}
+                    placeholder="Buraya yorum yazabilirsiniz..."
+                    value={comment}
+                    onChangeText={(text) => setComment(text)}
+                />
+            </View>
+            <TouchableOpacity onPress={() => handleSendQuestion()} style={styles.sendButton}>
+                <Text style={styles.sendButtonText}>Soruyu Gönder</Text>
+            </TouchableOpacity>
+        </View>
     );
 };
 
-export default QuestionBoxScreen = () => {
-    const [image, setImage] = useState(null);
-    const [camera, setShowCamera] = useState(false);
-    const [hasPermission, setHasPermission] = useState(null);
-    useEffect(() => {
-        (async () => {
-            const { status } = await Camera.requestPermissionsAsync();
-            setHasPermission(status === "granted");
-        })();
-    }, []);
-    if (hasPermission === null) {
-        return <View />;
-    }
-    if (hasPermission === false) {
-        return <Text>No access to camera</Text>;
-    }
-    return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <View
-                style={{
-                    backgroundColor: "#eeee",
-                    width: 120,
-                    height: 120,
-                    borderRadius: 100,
-                    marginBottom: 8,
-                }}
-            >
-                <Image
-                    source={{ uri: image }}
-                    style={{ width: 120, height: 120, borderRadius: 20 }}
-                />
-            </View>
-            <Button
-                style={{ width: "30%", marginTop: 16 }}
-                icon="camera"
-                mode="contained"
-                onPress={() => {
-                    setShowCamera(true);
-                }}
-            >
-                Camera
-            </Button>
-            {camera && (
-                <CameraModule
-                    showModal={camera}
-                    setModalVisible={() => setShowCamera(false)}
-                    setImage={(result) => setImage(result.uri)}
-                />
-            )}
-        </View>
-    );
-}
+const styles = StyleSheet.create({
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    inboxContainer: {
+        height: 100,
+        backgroundColor: '#E0E0E0',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    inboxText: {
+        fontSize: 20,
+        color: '#757575',
+    },
+
+});

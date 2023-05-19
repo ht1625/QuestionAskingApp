@@ -35,16 +35,16 @@ export default LoginScreen = (props) => {
       password: password,
       appType: "LECTURER"
     })
-      .then(result => {
-        if (result.status == 201) {
-          console.log("geliyor");
-          AsyncStorage.setItem('token', result.data.jwtToken);
-          navigation.navigate('Welcome');
-        }
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    .then(result => {
+      if (result.status == 201) {
+        console.log("geliyor");
+        AsyncStorage.setItem('token', result.data.jwtToken);
+        navigation.navigate('Welcome');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
      
   };
 

@@ -14,10 +14,6 @@ import styles from '../assets/style';
 import {useNavigation, useRoute} from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
-  
-
 export default RegisterScreen = () => {
   const handleGetToken = async () => {
     const dataToken = await AsyncStorage.getItem('token');
