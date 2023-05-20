@@ -1,67 +1,75 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
 
-function ChatDetailScreen() {
+import React, { useEffect, useState } from 'react';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
+import WebSocketClient from './WebSocketClient';
+const ChatRoom = () => {
+  const [name, setName] = useState('');
+  const [isEnter, setIsEnter] = useState(false);
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
+    return () => WebSocketClient.close();
   }, []);
 
-  const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
-  }, []);
+  useEffect(() => {
+    WebSocketClient.onReceiveMessage = (newMessage) => {
+      setMessages(GiftedChat.append(messages, newMessage));
+    };
+  }, [messages]);
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.navbar}>
-        <Text style={styles.title}>Teacher Husniye</Text>
-        <Text style={styles.detail}>Online</Text>
+  const onSend = (newMessages) => {
+    WebSocketClient.send(newMessages[0]);
+  };
+
+  if (!isEnter)
+    return (
+      <View style={styles.container}>
+        <TextInput
+          style={styles.textInput}
+          textAlign="center"
+          value={name}
+          placeholder="Name"
+          onChangeText={(text) => setName(text)}
+        />
+        <Button title="Enter" onPress={() => setIsEnter(true)} />
       </View>
+    );
+  else {
+    const user = {
+      _id: name,
+      name,
+      avatar:
+        'https://cdn.pixabay.com/photo/2016/11/18/23/38/child-1837375__340.png',
+    };
+
+    return (
       <View style={{ flex: 1 }}>
         <GiftedChat
           messages={messages}
-          onSend={messages => onSend(messages)}
-          user={{
-            _id: 1,
-          }}
+          onSend={(newMessages) => onSend(newMessages)}
+          user={user}
+          renderUsernameOnMessage
         />
       </View>
-    </SafeAreaView>
-  );
-}
+    );
+  }
+};
 
 const styles = StyleSheet.create({
-  navbar: {
-    height: 50,
+  container: {
+    flex: 1,
     backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
+    justifyContent: 'center',
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  detail: {
-    fontSize: 14,
-    color: 'green',
+  textInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    width: '50%',
   },
 });
 
-export default ChatDetailScreen;
+export default ChatRoom;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

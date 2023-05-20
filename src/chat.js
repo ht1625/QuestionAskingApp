@@ -37,7 +37,7 @@ const ChatScreen = (props) => {
                             name="zeynep betul"
                             subtitle="deneme"
                             onPress={() => {
-                                navigation.navigate('ChatDetail');
+                                navigation.navigate('ChatDetail',"husniye@gmail.com","zeynep@gmail.com");
                             }}
                         />
                         <View style={styles.seperator} />

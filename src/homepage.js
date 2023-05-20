@@ -1,21 +1,45 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Dimensions, Image, Button, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { darkBlue, darkPurple } from './theme';
 import {useNavigation} from "@react-navigation/native";
 import {profile,logout} from '../src/api/user_api';
+import jwt_decode from 'jwt-decode';
+import { useEffect } from "react";
+
+
 
 const { width, height } = Dimensions.get("window");
 
 export default HomepageScreen = (props) => {
 
+    
     const navigation = useNavigation();
+    const [username, setUsername] = useState(null);
 
     const onLogoutPress = () =>{
         logout();
         navigation.navigate("Login")
       }
-
+      const getSubFromToken = async () => {
+        try {
+            let token = await AsyncStorage.getItem('token');
+        
+          if (token) {
+            const decodedToken = jwt_decode(token);
+            const sub = decodedToken.sub;
+            setUsername(sub);
+            return sub;
+          }
+        } catch (error) {
+          console.log('Error reading token from AsyncStorage:', error);
+        }
+        return null;
+      };
+      useEffect(() => {
+       console.log(username);
+      }, []);
+      
     return (
         
         <View>
