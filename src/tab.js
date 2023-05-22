@@ -1,15 +1,33 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import QuestionBoxScreen from './questionBox';
+import { useNavigation } from "@react-navigation/native";
 import ChatScreen from './chat';
 import ProfileScreen from './profile';
 import HomepageScreen from './homepage';
 import { Ionicons } from '@expo/vector-icons';
+import {logout} from '../src/api/user_api';
 
 export default TabScreen = () => {
 
     const Tab = createBottomTabNavigator();
+    const navigation = useNavigation();
+
+    const renderLogoutButton = () => {
+        const handleLogout = () => {
+            // handle logout logic here
+            logout();
+            //console.log("deneme");
+            navigation.navigate('Login');
+        };
+
+        return (
+            <TouchableOpacity onPress={handleLogout} style={{ marginRight: 10 }}>
+                <Ionicons name="log-out-outline" size={24} color="black" />
+            </TouchableOpacity>
+        );
+    };
 
     return (
 
@@ -33,8 +51,16 @@ export default TabScreen = () => {
                     // You can return any component that you like here!
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: 'tomato',
+                tabBarActiveTintColor: '#723CEC',
                 tabBarInactiveTintColor: 'gray',
+                tabBarStyle: { backgroundColor: '#E7E0F7' }, // Bottom navbar background color
+                headerStyle: { backgroundColor: '#E7E0F7' }, // Top navbar background color
+                headerRight: () => {
+                    if (route.name === 'Profile') {
+                        return renderLogoutButton();
+                    }
+                    return null;
+                },
             })}
         >
             <Tab.Screen name="Home" component={HomepageScreen} options={{

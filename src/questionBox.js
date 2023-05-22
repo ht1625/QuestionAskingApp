@@ -133,6 +133,7 @@ export default QuestionBoxScreen = () => {
     const [hasPermission, setHasPermission] = useState(null);
     //aşağısı kamera dışındakiler için
     const [selectedCourse, setSelectedCourse] = useState(null);
+    const [selectedClassDegree, setSelectedClassDegree] = useState(null);
     const [comment, setComment] = useState(null);
 
     useEffect(() => {
@@ -155,10 +156,14 @@ export default QuestionBoxScreen = () => {
         setSelectedCourse(course);
     };
 
+    const handleClassSelection = (course) => {
+        setSelectedClassDegree(course);
+    };
+
     const handleSendQuestion = () => {
         // function to handle sending question to server
         // comment, imageText, selectedCourse
-        console.log("Test");
+        console.log(imageText);
         sendQuestion({
             //comment: comment,
             question: image,
@@ -176,7 +181,20 @@ export default QuestionBoxScreen = () => {
     };  
 
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>      
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}> 
+            <Text style={styles.subTitle}>Define class of question</Text>
+            <View style={styles.container}>
+                {["Primary School", "Middle School", "High School"].map((classDegree, index) => (
+                    <View style={styles.buttonContainer} key={index}>
+                    <TouchableOpacity 
+                        style={selectedClassDegree === classDegree ? styles.selectedCourse : styles.course}
+                        onPress={() => handleClassSelection(classDegree)}
+                    >
+                        <Text style={styles.text}>{classDegree}</Text>
+                    </TouchableOpacity>
+                    </View>
+                ))}
+            </View>       
             <Text style={styles.subTitle}>Define lesson of question</Text>
             <View style={styles.container}>
                 {["BIOLOGY", "PHYSICS", "TURKISH", "CHEMISTRY", "MATH", "ENGLISH"].map((course, index) => (
@@ -245,7 +263,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold',
       marginBottom: 8,
-      marginTop: 20
+      marginTop: 5
     },
     courseSelectionText: {
       fontSize: 16,
@@ -264,7 +282,7 @@ const styles = StyleSheet.create({
       marginBottom: 8,
     },
     sendButton: {
-      backgroundColor: '#008000',
+      backgroundColor: '#7D9B88',
       paddingHorizontal: 16,
       paddingVertical: 10,
       borderRadius: 4,
@@ -294,7 +312,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#2196F3',
+        backgroundColor: '#7389B9',
         color: '#FFFFFF'
     },
     text: {

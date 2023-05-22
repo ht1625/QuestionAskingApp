@@ -3,23 +3,17 @@ import { darkPurple, lightBlue } from './theme';
 import {
   Text,
   Image,
-  StatusBar,
   StyleSheet,
   View,
-  TextInput,
-  Keyboard,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Alert,
   TouchableOpacity,
   Dimensions
 } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {user_login,logout} from '../src/api/user_api';
+import {user_login} from '../src/api/user_api';
 
 const { width, height } = Dimensions.get("window");
 export default LoginScreen = (props) => {

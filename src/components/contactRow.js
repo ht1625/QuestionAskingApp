@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     avatar: {
         width: 56,
         height: 56,
-        backgroundColor: '#5f9ea0',
+        backgroundColor: '#723CEC',
         borderRadius: 28,
         alignItems: 'center',
         justifyContent: 'center',

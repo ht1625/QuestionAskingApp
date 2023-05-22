@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, SafeAreaView, StyleSheet } from 'react-native';
 import { useEffect } from "react";
 import ContactRow from './components/contactRow';
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons';
 
 const chats = [
     {
@@ -39,6 +40,7 @@ const ChatScreen = (props) => {
                             onPress={() => {
                                 navigation.navigate('ChatDetail',"husniye@gmail.com","zeynep@gmail.com");
                             }}
+                            icon={<Ionicons name="person-outline" size={24} color="red" />} // İkonun rengini kırmızı olarak ayarladık
                         />
                         <View style={styles.seperator} />
                     </React.Fragment>

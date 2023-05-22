@@ -1,49 +1,121 @@
 import React from 'react';
+import { darkPurple, lightBlue } from './theme';
 import {
   Text,
   Image,
-  StatusBar,
+  StyleSheet,
   View,
-  TextInput,
-  Button,
-  Keyboard,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
-import styles from '../assets/style';
-import {useNavigation, useRoute} from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button, Input } from 'react-native-elements';
+import { useState } from 'react';
+import { useNavigation } from "@react-navigation/native";
 
-export default RegisterScreen = () => {
-  const handleGetToken = async () => {
-    const dataToken = await AsyncStorage.getItem('token');
-    if (!dataToken) {
-     console.log(dataToken)
-    } else {
-      console.log("no data")
-    }
+const { width, height } = Dimensions.get("window");
+
+export default RegisterScreen = (props) => {
+
+  const navigation = useNavigation();
+  const [FirstName, setFirstName] = useState('');
+  const [LastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const onRegisterPress = () => {
+     console.log("deneme");
   };
-  handleGetToken();
-  const navigation = useNavigation()
-  const route = useRoute()
-
-  const onLoginPress = () => {};
 
   return (
-    <KeyboardAvoidingView style={styles.containerView} behavior="padding">
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.loginScreenContainer}>
-            <View style={styles.loginFormView}>
-              <Text style={styles.logoText}>QuAsk Register {route.params.username}</Text>
-              <Image style={styles.image} source={require("../assets/Questions_And_Answers-512.webp")} /> 
-              <StatusBar style="auto" />
-              <TextInput placeholder="Username" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-              <TextInput placeholder="Password" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true} />
-              <Button style={styles.fbLoginButton} onPress={() => onLoginPress()} title="Register" />
-              <Button style={styles.loginButton} onPress={() => navigation.navigate("Login")} title="Login" />
-            </View>
-          </View>
-      </TouchableWithoutFeedback>
+    <KeyboardAvoidingView style={{ flex: 1, }}>
+      <View style={{ flex: 1, justifyContent: "space-between", padding: 25 }}>
+        <Image source={require("../assets/images/logo.png")} style={styles.logo} />
+        <View>
+
+          <Text style={{ fontSize: 18,marginLeft: 10 }}>Firstname</Text>
+          <Input
+            value = {FirstName}
+            placeholder='John'
+            inputContainerStyle={{ borderBottomColor: darkPurple }}
+            onChangeText={  setFirstName }
+            keyboardType="default" />
+
+          <Text style={{ fontSize: 18,marginLeft: 10 }}>Lastname</Text>
+          <Input
+            value = {LastName}
+            placeholder='Erick'
+            inputContainerStyle={{ borderBottomColor: darkPurple }}
+            onChangeText={  setLastName }
+            keyboardType="default" />
+
+          <Text style={{ fontSize: 18,marginLeft: 10 }}>Email</Text>
+          <Input
+            value = {email}
+            placeholder='example@example.com'
+            inputContainerStyle={{ borderBottomColor: darkPurple }}
+            onChangeText={  setEmail }
+            keyboardType="email-address" />
+
+          <Text style={{ fontSize: 18, marginLeft: 10 }}>Password</Text>
+          <Input
+            value = {password}
+            placeholder='• • • • • • • •'
+            inputContainerStyle={{ borderBottomColor: darkPurple }}
+            secureTextEntry={true}
+            onChangeText={ setPassword } />
+
+        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")} style={{ flexDirection: "row", alignSelf: "center", marginTop: 15 }}>
+          <Text style={{  fontSize: 14 }}>Bir hesabın var mı? </Text>
+          <Text style={{  fontSize: 14 }}>Giriş Yap</Text>
+        </TouchableOpacity>
+        <Button  onPress={onRegisterPress} title="Register" />
+        <View />
+   
+      </View>
     </KeyboardAvoidingView>
-  );
+
+  )
 }
+
+const styles = StyleSheet.create({
+  progressBarContainer: {
+    flexDirection: "row",
+    alignSelf: "center",
+    marginTop: 15
+  },
+  proggressBarFirst: {
+    width: (width / 4) - 12,
+    height: 8,
+    marginRight: 4,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    backgroundColor: darkPurple
+  },
+  proggressBarLast: {
+    backgroundColor: lightBlue,
+    width: (width / 4) - 12,
+    height: 8,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  proggressBar: {
+    backgroundColor: lightBlue,
+    width: (width / 4) - 12,
+    height: 8,
+    marginRight: 4,
+  },
+  logo: {
+    alignSelf: "center",
+    width: 195.65,
+    height: 74.39
+  },
+  line: {
+    backgroundColor: darkPurple,
+    height: 1,
+    width: width - 30,
+    alignSelf: "center"
+  }
+});
+
