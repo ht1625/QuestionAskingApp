@@ -38,7 +38,7 @@ const ChatScreen = (props) => {
                             name="zeynep betul"
                             subtitle="deneme"
                             onPress={() => {
-                                navigation.navigate('ChatDetail',"husniye@gmail.com","zeynep@gmail.com");
+                                navigation.navigate('ChatDetail',{chatId: 'deneme'});
                             }}
                             icon={<Ionicons name="person-outline" size={24} color="red" />} // İkonun rengini kırmızı olarak ayarladık
                         />

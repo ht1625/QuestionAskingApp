@@ -6,8 +6,7 @@ import {useNavigation} from "@react-navigation/native";
 import {profile,logout} from '../src/api/user_api';
 import jwt_decode from 'jwt-decode';
 import { useEffect } from "react";
-
-
+import SliderCard from "./cardSlider";
 
 const { width, height } = Dimensions.get("window");
 
@@ -38,13 +37,40 @@ export default HomepageScreen = (props) => {
       };
       useEffect(() => {
        console.log(username);
-      }, []);
+    }, []);
+
+    const cardsQuestion = [
+        {
+            id: 1,
+            branch: 'Fizik',
+            lecturer: 'Zeynep',
+            pathImage: '../assets/question.png',
+            time: '14:08',
+            state: 'Çözüldü'
+        },
+        {
+            id: 2,
+            branch: 'Kimya',
+            lecturer: 'Engindeniz',
+            pathImage: '../assets/question.png',
+            time: '10:25',
+            state: 'Çözüldü'
+        },
+        {
+            id: 1,
+            branch: 'Matematik',
+            lecturer: 'Hüsniye',
+            pathImage: '../assets/question.png',
+            time: '08:45',
+            state: 'Değerlendirilmedi'
+        }
+    ];
       
     return (
         
         <View>
             <StatusBar hidden={false} barStyle="dark-content" />
-            <ScrollView style={{}}>
+            <ScrollView>
                 <View style={styles.container}>
                     <View style={ Platform.OS === "ios" ? {...styles.headerContainer, marginTop:30} : {...styles.headerContainer}}>
                         <Image source={require("../assets/images/logo.png")} style={styles.logo} />
@@ -56,28 +82,45 @@ export default HomepageScreen = (props) => {
                             onPress={() => props.navigation.navigate("Help")}
                         />
                     </View>
-                    <View style={{ justifyContent: "center", alignSelf: "center", padding: 20 }}>
+                    <View style={styles.containerSlider}>
+                        <SliderCard style={{ flex: 1 }}/>
+                    </View>
+                    {cardsQuestion.map((card) => (
+                    <View style={{ justifyContent: "center", alignSelf: "center", padding: 20, paddingBottom: 0 }} key={card.id}>
                       <TouchableOpacity /*onPress={() => props.navigation.navigate("Solution")}*/ style={styles.questionContainer}>
                           <View style={{ flexDirection: "row" }}>
                               <Image resizeMode="cover" source={require("../assets/question.png")} style={styles.questionImage} />
                               <View style={{ alignSelf: "center", marginLeft: 15 }}>
-                                  <Text style={{ marginBottom: 15 }}>dskjaşdk</Text>
-                                  <Text>dskjaşdk</Text>
+                                  <Text style={{ marginBottom: 15 }}>{card.branch}</Text>
+                                  <Text>{card.lecturer}</Text>
                               </View>
                           </View>
                           <View>
-                              <Text style={{ marginBottom: 15, textAlign:"right" }}>10:53</Text>
-                              <Text>Değerlendirilmedi</Text>
+                              <Text style={{ marginBottom: 15, textAlign:"right" }}>{card.time}</Text>
+                              <Text>{card.state}</Text>
                           </View>
                       </TouchableOpacity>
                     </View>
+                    ))}
                 </View>
-            </ScrollView>          
+            </ScrollView>      
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    containerSlider:{
+        height: 200,
+        marginVertical: 10,
+        width: width - 40,
+        flexDirection: "row",
+        alignItems: "center",
+        borderRadius: 8,
+        borderColor: darkBlue,
+        borderWidth: 1,
+        justifyContent: "space-between",
+        marginTop: 30
+    },
     container: {
         padding: 20,
         minHeight: height

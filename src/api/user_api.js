@@ -18,7 +18,6 @@ export const user_login = async data => {
 export const profile = async () => {
    let token = await AsyncStorage.getItem('token');
    console.log('giden token: '+token)
-
     try{
 
         const result = await ApiManager('/user/profile',{
@@ -35,8 +34,22 @@ export const profile = async () => {
       return  error.response.data;
     }
 };
+export const register = async (data) => {
+  try {
+    const result = await ApiManager('/user/signup', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      data: data,
+    });
+    return result;
+  } catch (error) {
+    return error.response.data;
+  }
+};
 export const logout = async () => {
     await AsyncStorage.removeItem("token");
     console.log("logged out");
-  };
+};
 

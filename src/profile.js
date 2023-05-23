@@ -1,5 +1,7 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
+import {profile} from '../src/api/user_api';
+import { useEffect, useState } from 'react';
 
 const ProfileTableRow = ({ title, value }) => {
     return (
@@ -16,26 +18,29 @@ const ProfileTableRow = ({ title, value }) => {
 
 const ProfileScreen = () => {
 
-    const studentData = {
-        firstName: 'John',
-        lastName: 'Doe',
-        phoneNumber: '555-555-5555',
-        email: 'johndoe@example.com',
-        grade: '10th',
-        questionCount: 12,
-        imageUrl: 'https://media.licdn.com/dms/image/C4D03AQEYqZsobyzzYA/profile-displayphoto-shrink_800_800/0/1662841589971?e=1689206400&v=beta&t=-XidWGK7XCcpGZXleqsgjNh2bvs6EEKDrIIWYqb-C-Q',
-    };
+    const [studentData, setStudentData] = useState(''); 
+
+    useEffect(() => {
+        console.log('data çekmeye hazırlanıyor...');
+        profile().then(result => {
+          console.log(result.data);
+          setStudentData(result.data);
+        }).catch(error => {
+          console.log('Hata:', error);
+        });
+    }, []);   
 
     return (
         <View style={styles.container}>
             <View style={styles.profile}>
-                <Image source={{ uri: studentData.imageUrl }} style={styles.profileImage} />
-                <ProfileTableRow title="First Name" value={studentData.firstName} />
-                <ProfileTableRow title="Last Name" value={studentData.lastName} />
-                <ProfileTableRow title="Phone Number" value={studentData.phoneNumber} />
-                <ProfileTableRow title="Email" value={studentData.email} />
-                <ProfileTableRow title="Grade" value={studentData.grade} />
-                <ProfileTableRow title="Question Count" value={studentData.questionCount} />
+                <Image source={{ uri: 'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' }} style={styles.profileImage} />
+                <ProfileTableRow title="First Name" value={studentData.username} />
+                <ProfileTableRow title="Last Name" value={studentData.username} />
+                <ProfileTableRow title="Nick Name" value={studentData.nickname} />
+                <ProfileTableRow title="Phone Number" value={studentData.username} />
+                <ProfileTableRow title="Email" value={studentData.username} />
+                <ProfileTableRow title="Grade" value={studentData.username} />
+                <ProfileTableRow title="Question Count" value={studentData.username} />
             </View>
         </View>
     );
@@ -69,7 +74,7 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
         borderBottomColor: '#ccc',
         paddingVertical: 10,
     },
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     title: {
-        fontWeight: 'bold',
+        fontWeight: '600',
         fontSize: 16,
     },
     value: {

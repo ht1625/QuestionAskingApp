@@ -5,19 +5,25 @@ import { Icon } from 'react-native-elements';
 const { width } = Dimensions.get('window');
 
 const cards = [
-  {
-    id: 1,
-    text: 'Biyoloji, yaşamın yapılarını, işleyişini ve etkileşimlerini inceleyen bilim dalıdır. Canlı organizmaların anatomisi, fizyolojisi, genetikleri ve çevreleriyle olan ilişkileri biyolojinin konuları arasında yer alır.',
-  },
-  {
-    id: 2,
-    text: 'Kimya, maddenin yapısını, bileşimini, özelliklerini ve dönüşümlerini inceleyen bilim dalıdır. Kimya, elementlerin, bileşiklerin ve karışımların özelliklerini ve tepkimelerini araştırır.',
-  },
-  {
-    id: 3,
-    text: 'Fizik, doğadaki madde ve enerjinin davranışını ve etkileşimlerini inceleyen bilim dalıdır. Fizik, hareket, enerji, kuvvet, ışık, ses, elektrik ve manyetizma gibi konuları kapsar.',
-  },
-];
+    {
+      id: 1,
+      text: 'Biyoloji, yaşamın yapılarını, işleyişini ve etkileşimlerini inceleyen bilim dalıdır. Canlı organizmaların anatomisi, fizyolojisi, genetikleri ve çevreleriyle olan ilişkileri biyolojinin konuları arasında yer alır.',
+      branch: 'Biyoloji',
+      iconName: 'heart',
+    },
+    {
+      id: 2,
+      text: 'Kimya, maddenin yapısını, bileşimini, özelliklerini ve dönüşümlerini inceleyen bilim dalıdır. Kimya, elementlerin, bileşiklerin ve karışımların özelliklerini ve tepkimelerini araştırır.',
+      branch: 'Kimya',
+      iconName: 'flask',
+    },
+    {
+      id: 3,
+      text: 'Fizik, doğadaki madde ve enerjinin davranışını ve etkileşimlerini inceleyen bilim dalıdır. Fizik, hareket, enerji, kuvvet, ışık, ses, elektrik ve manyetizma gibi konuları kapsar.',
+      branch: 'Fizik',
+      iconName: 'target',
+    },
+  ];
 
 const SliderCard = () => {
   const [activeCard, setActiveCard] = useState(0);
@@ -37,16 +43,19 @@ const SliderCard = () => {
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
-        {cards.map((card) => (
-          <View key={card.id} style={styles.card}>
+        {cards.map((card, index) => (
+          <View key={card.id} style={[styles.card, { zIndex: index === activeCard ? 1 : 0 }]}>
             <Icon
-              name="info"
+              name={card.iconName}
               type="feather"
-              size={24}
-              color="white"
+              size={28}
+              color={index === activeCard ? '#723CEC' : 'gray'}
               containerStyle={styles.iconContainer}
             />
             <Text style={styles.cardText}>{card.text}</Text>
+            {index === activeCard && (
+              <Text style={styles.branchText}>{card.branch}</Text>
+            )}
           </View>
         ))}
       </ScrollView>
@@ -76,17 +85,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'transparent',
     width: 350,
-    position: 'relative',
   },
   iconContainer: {
     position: 'absolute',
     top: 10,
     left: 10,
-    zIndex: 10,
   },
   cardText: {
     fontSize: 15,
-    color: 'white',
+  },
+  branchText: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    color: '#723CEC',
   },
   indicatorContainer: {
     flexDirection: 'row',

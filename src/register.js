@@ -12,6 +12,8 @@ import {
 import { Button, Input } from 'react-native-elements';
 import { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {register} from '../src/api/user_api';
 
 const { width, height } = Dimensions.get("window");
 
@@ -20,11 +22,30 @@ export default RegisterScreen = (props) => {
   const navigation = useNavigation();
   const [FirstName, setFirstName] = useState('');
   const [LastName, setLastName] = useState('');
+  const [NickName, setNickName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onRegisterPress = () => {
-     console.log("deneme");
+    console.log("register go to api.");
+    register({
+      username: email,
+      password: password,
+      appType: "STUDENT",
+      firstName: FirstName,
+      lastName: LastName,
+      nickname: NickName
+    })
+    .then(result => {
+      if (result.status == 201) {
+        console.log("kaydediyor");
+        AsyncStorage.setItem('token', result.data.jwtToken);
+        navigation.navigate('Welcome');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
   };
 
   return (
@@ -48,6 +69,14 @@ export default RegisterScreen = (props) => {
             inputContainerStyle={{ borderBottomColor: darkPurple }}
             onChangeText={  setLastName }
             keyboardType="default" />
+
+          <Text style={{ fontSize: 18,marginLeft: 10 }}>Nickname</Text>
+          <Input
+            value = {NickName}
+            placeholder='Eric'
+            inputContainerStyle={{ borderBottomColor: darkPurple }}
+            onChangeText={ setNickName }
+            keyboardType="default" />  
 
           <Text style={{ fontSize: 18,marginLeft: 10 }}>Email</Text>
           <Input
