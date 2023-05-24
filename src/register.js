@@ -51,7 +51,7 @@ export default RegisterScreen = (props) => {
   return (
     <KeyboardAvoidingView style={{ flex: 1, }}>
       <View style={{ flex: 1, justifyContent: "space-between", padding: 25 }}>
-        <Image source={require("../assets/images/logo.png")} style={styles.logo} />
+        <Image source={require("../assets/askStudent.png")} style={styles.logo} />
         <View>
 
           <Text style={{ fontSize: 18,marginLeft: 10 }}>Firstname</Text>
@@ -138,7 +138,8 @@ const styles = StyleSheet.create({
   logo: {
     alignSelf: "center",
     width: 195.65,
-    height: 74.39
+    height: 74.39,
+    marginTop: 25
   },
   line: {
     backgroundColor: darkPurple,

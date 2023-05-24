@@ -44,7 +44,7 @@ export default HomepageScreen = (props) => {
             id: 1,
             branch: 'Fizik',
             lecturer: 'Zeynep',
-            pathImage: '../assets/question.png',
+            pathImage: '../assets/askStudent.png',
             time: '14:08',
             state: 'Çözüldü'
         },
@@ -52,7 +52,7 @@ export default HomepageScreen = (props) => {
             id: 2,
             branch: 'Kimya',
             lecturer: 'Engindeniz',
-            pathImage: '../assets/question.png',
+            pathImage: '../assets/askStudent.png',
             time: '10:25',
             state: 'Çözüldü'
         },
@@ -60,7 +60,7 @@ export default HomepageScreen = (props) => {
             id: 1,
             branch: 'Matematik',
             lecturer: 'Hüsniye',
-            pathImage: '../assets/question.png',
+            pathImage: '../assets/askStudent.png',
             time: '08:45',
             state: 'Değerlendirilmedi'
         }
@@ -73,13 +73,13 @@ export default HomepageScreen = (props) => {
             <ScrollView>
                 <View style={styles.container}>
                     <View style={ Platform.OS === "ios" ? {...styles.headerContainer, marginTop:30} : {...styles.headerContainer}}>
-                        <Image source={require("../assets/images/logo.png")} style={styles.logo} />
+                        <Image source={require("../assets/askStudent.png")} style={styles.logo} />
                         <Icon
                             name='help'
                             type='help-outline'
                             color={darkPurple}
                             style={{ alignSelf: "center" }}
-                            onPress={() => props.navigation.navigate("Help")}
+                            onPress={() => props.navigation.navigate("ApplyBranch")}
                         />
                     </View>
                     <View style={styles.containerSlider}>

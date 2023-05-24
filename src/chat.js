@@ -8,16 +8,28 @@ import { Ionicons } from '@expo/vector-icons';
 const chats = [
     {
         users: ["a@gmail.com", "b@gmail.com"],
-        messages: [],
+        messages: 'Okay',
+        nameLecturer: 'Jessica',
     },
     {
         users: ["a@gmail.com", "b@gmail.com"],
-
-        messages: [],
+        messages: 'Thank you',
+        nameLecturer: 'Monica'
     },
     {
         users: ["a@gmail.com", "b@gmail.com"],
-        messages: [],
+        messages: 'I dont get it',
+        nameLecturer: 'Sue'
+    },
+    {
+        users: ["a@gmail.com", "b@gmail.com"],
+        messages: 'No, I dont',
+        nameLecturer: 'Barney'
+    },
+    {
+        users: ["a@gmail.com", "b@gmail.com"],
+        messages: 'I dont have any question.',
+        nameLecturer: 'Joe'
     }
 ]
 
@@ -31,12 +43,12 @@ const ChatScreen = (props) => {
 
     return (
         <SafeAreaView>
-            {chats.map((chat, index) => (
+            {chats.map((index) => (
                 <React.Fragment>
                     <React.Fragment key={index}>
                         <ContactRow
-                            name="zeynep betul"
-                            subtitle="deneme"
+                            name={index.nameLecturer}
+                            subtitle={index.messages}
                             onPress={() => {
                                 navigation.navigate('ChatDetail',{chatId: 'deneme'});
                             }}

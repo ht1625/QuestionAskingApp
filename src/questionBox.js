@@ -127,7 +127,7 @@ const CameraModule = (props) => {
 
 export default QuestionBoxScreen = () => {
 
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('https://img.icons8.com/dusk/512w/camera--v1.png');
     const [imageText, setImageText] = useState(null);
     const [camera, setShowCamera] = useState(false);
     const [hasPermission, setHasPermission] = useState(null);
@@ -235,11 +235,10 @@ export default QuestionBoxScreen = () => {
                 />
             )}     
             <View style={styles.commentContainer}>
-                <Text style={styles.subTitle}>Write comment If you want</Text>
                 <TextInput
                     style={styles.commentInput}
                     multiline={true}
-                    placeholder="Buraya yorum yazabilirsiniz..."
+                    placeholder="Write comment If you want"
                     value={comment}
                     onChangeText={(text) => setComment(text)}
                 />
@@ -260,10 +259,11 @@ const styles = StyleSheet.create({
         marginBottom: 0
     },
     subTitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
+      fontSize: 16,
+      fontWeight: '700',
       marginBottom: 8,
-      marginTop: 5
+      marginTop: 5,
+      color: '#9999CC',
     },
     courseSelectionText: {
       fontSize: 16,
@@ -280,9 +280,10 @@ const styles = StyleSheet.create({
       paddingHorizontal: 70,
       paddingTop: 8,
       marginBottom: 8,
+      marginTop:20
     },
     sendButton: {
-      backgroundColor: '#7D9B88',
+      backgroundColor: '#7F85EB',
       paddingHorizontal: 16,
       paddingVertical: 10,
       borderRadius: 4,

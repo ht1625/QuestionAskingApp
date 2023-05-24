@@ -20,7 +20,7 @@ export default welcome = (props) => {
 
             <ImageBackground source={require("../assets/images/welcome-bg.png")} resizeMode="cover" style={styles.image}>
                 <View style={{ flex: 1, justifyContent: "space-around" }}>
-                    <Image source={require("../assets/images/logo-light.png")} style={styles.logo} />
+                    <Image source={require("../assets/askStudentSplash.png")} style={styles.logo} />
                     <AnimatedLottieView source={require('../assets/images/confetti.json')} autoPlay loop />
                     <View style={{ alignItems: "center" }}>
                         <Text style={{ fontSize: 18, color: whiteColor, }}>Her şey hazır!</Text>
