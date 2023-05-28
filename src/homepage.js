@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Dimensions, Image, Switch, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
+import { Dimensions, Image, Button, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { darkBlue, darkPurple } from './theme';
 import {useNavigation} from "@react-navigation/native";
@@ -42,15 +42,15 @@ export default HomepageScreen = (props) => {
     const cardsQuestion = [
         {
             id: 1,
-            branch: 'Biyoloji',
+            branch: 'Fizik',
             lecturer: 'Zeynep',
             pathImage: '../assets/askStudent.png',
             time: '14:08',
-            state: 'Soruyu Çöz'
+            state: 'Çözüldü'
         },
         {
             id: 2,
-            branch: 'Fizik',
+            branch: 'Kimya',
             lecturer: 'Engindeniz',
             pathImage: '../assets/askStudent.png',
             time: '10:25',
@@ -58,19 +58,13 @@ export default HomepageScreen = (props) => {
         },
         {
             id: 1,
-            branch: 'Kimya',
+            branch: 'Matematik',
             lecturer: 'Hüsniye',
             pathImage: '../assets/askStudent.png',
             time: '08:45',
             state: 'Değerlendirilmedi'
         }
     ];
-
-    const [isActive, setIsActive] = useState(false);
-
-    const handleToggle = () => {
-        setIsActive(!isActive);
-    };
       
     return (
         
@@ -79,29 +73,20 @@ export default HomepageScreen = (props) => {
             <ScrollView>
                 <View style={styles.container}>
                     <View style={ Platform.OS === "ios" ? {...styles.headerContainer, marginTop:30} : {...styles.headerContainer}}>
-                        <Image source={require("../assets/askLecturer.png")} style={styles.logo} />
+                        <Image source={require("../assets/askStudent.png")} style={styles.logo} />
                         <Icon
                             name='help'
                             type='help-outline'
                             color={darkPurple}
                             style={{ alignSelf: "center" }}
-                            onPress={() => props.navigation.navigate("ApplyBranch")}
+                            onPress={() => props.navigation.navigate("Help")}
                         />
                     </View>
                     <View style={styles.containerSlider}>
                         <SliderCard style={{ flex: 1 }}/>
                     </View>
-                    <View style={styles.containerToggle}>
-                        <Text style={styles.text}>Sorular için Online olun</Text>
-                        <Switch
-                            value={isActive}
-                            onValueChange={handleToggle}
-                            thumbColor={isActive ? '#723CEC' : '#A9ADB0'}
-                            trackColor={{ false: '#DAE0E3', true: '#DAE0E3' }}
-                        />
-                    </View>
                     {cardsQuestion.map((card) => (
-                    <View style={{ justifyContent: "center", alignSelf: "center", padding: 10, paddingBottom: 0 }} key={card.id}>
+                    <View style={{ justifyContent: "center", alignSelf: "center", padding: 20, paddingBottom: 0 }} key={card.id}>
                       <TouchableOpacity /*onPress={() => props.navigation.navigate("Solution")}*/ style={styles.questionContainer}>
                           <View style={{ flexDirection: "row" }}>
                               <Image resizeMode="cover" source={require("../assets/question.png")} style={styles.questionImage} />
@@ -112,7 +97,7 @@ export default HomepageScreen = (props) => {
                           </View>
                           <View>
                               <Text style={{ marginBottom: 15, textAlign:"right" }}>{card.time}</Text>
-                              <Text style={styles.buttonState}>{card.state}</Text>
+                              <Text>{card.state}</Text>
                           </View>
                       </TouchableOpacity>
                     </View>
@@ -136,25 +121,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginTop: 30
     },
-    buttonState: {
-        backgroundColor: "#CEBDF4",
-        padding: 4,
-        borderRadius: 5,
-        color: "#FFF"
-    },
     container: {
         padding: 20,
         minHeight: height
-    },
-    containerToggle: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        marginTop: 15,
-      },
-    text: {
-        flex: 1,
-        fontSize: 18,
     },
     headerContainer: {
         flexDirection: "row",

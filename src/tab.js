@@ -40,7 +40,7 @@ export default TabScreen = () => {
                         iconName = focused
                             ? 'ios-home-outline'
                             : 'ios-home-outline';
-                    } else if (route.name === 'QuReply') {
+                    } else if (route.name === 'QuAsk') {
                         iconName = focused ? 'ios-cube-outline' : 'ios-cube-outline';
                     } else if (route.name === 'Profile') {
                         iconName = focused ? 'ios-person-outline' : 'ios-person-outline';
@@ -66,9 +66,18 @@ export default TabScreen = () => {
             <Tab.Screen name="Home" component={HomepageScreen} options={{
                 headerShown: false,
             }} />
-            <Tab.Screen name="Chat" component={ChatScreen} />
-            <Tab.Screen name="QuReply" component={QuestionBoxScreen}/>
-            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Chat" component={ChatScreen} options={{
+                title: 'Chat of Question',
+                tabBarLabel: 'Chat',
+            }}/>
+            <Tab.Screen name="QuAsk" component={QuestionBoxScreen} options={{
+                title: 'Question Asking',
+                tabBarLabel: 'QuAsk',
+            }}/>
+            <Tab.Screen name="Profile" component={ProfileScreen} options={{
+                title: 'Profile Screen',
+                tabBarLabel: 'Profile',
+            }}/>
         </Tab.Navigator>
     )
 }

@@ -27,6 +27,6 @@ class WebSocketClient {
     };
   }
   
-  const client = new WebSocketClient('ws://192.168.1.69:8082/chat');
+  const client = new WebSocketClient('ws://192.168.1.63:8082/chat');
   
   export default client;

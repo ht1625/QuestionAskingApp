@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 
 const { width } = Dimensions.get('window');
 
-/*const cards = [
+  const cards = [
     {
       id: 1,
       text: 'Biyoloji, yaşamın yapılarını, işleyişini ve etkileşimlerini inceleyen bilim dalıdır. Canlı organizmaların anatomisi, fizyolojisi, genetikleri ve çevreleriyle olan ilişkileri biyolojinin konuları arasında yer alır.',
@@ -22,33 +22,6 @@ const { width } = Dimensions.get('window');
       text: 'Fizik, doğadaki madde ve enerjinin davranışını ve etkileşimlerini inceleyen bilim dalıdır. Fizik, hareket, enerji, kuvvet, ışık, ses, elektrik ve manyetizma gibi konuları kapsar.',
       branch: 'Fizik',
       iconName: 'target',
-    },
-  ];*/
-
-  const cards = [
-    {
-      id: 1,
-      text: 'Felsefe, insanın varoluşunu, bilgiyi, gerçeği, ahlakı, adaleti ve diğer temel kavramları inceleyen bir disiplindir. Felsefe, düşünme yetimizi kullanarak dünyayı anlama ve anlamlandırma çabasıdır.',
-      branch: 'Felsefe',
-      iconName: 'book',
-      teacher: 'Öğretmen A',
-      knowledge: 'Felsefi düşünce tarihini ve felsefi akımları anlamak, felsefi sorulara cevap aramak ve düşünce becerilerini geliştirmek konularında uzmandır.',
-    },
-    {
-      id: 2,
-      text: 'Ekonomi, kaynakların üretim, dağıtım ve tüketimini inceleyen bir sosyal bilim dalıdır. Ekonomi, insanların ihtiyaçlarını karşılamak için sınırlı kaynakları etkili bir şekilde kullanma konusunu ele alır.',
-      branch: 'Ekonomi',
-      iconName: 'dollar-sign',
-      teacher: 'Öğretmen B',
-      knowledge: 'Ekonomik sistemleri, piyasaları, mikro ve makroekonomi konularını anlamak ve ekonomik olayları analiz etmek konularında uzmandır.',
-    },
-    {
-      id: 3,
-      text: 'Sosyal bilimler, toplumun yapısını, davranışlarını, ilişkilerini ve değişimini inceleyen bilim dallarını kapsar. Sosyoloji, antropoloji, psikoloji, politika bilimi gibi alanlar sosyal bilimlere örnek olarak verilebilir.',
-      branch: 'Sosyal Bilimler',
-      iconName: 'users',
-      teacher: 'Öğretmen C',
-      knowledge: 'Toplumun sosyal dinamiklerini anlamak, sosyal ilişkileri analiz etmek ve sosyal değişimleri incelemek konularında uzmandır.',
     },
   ];
   

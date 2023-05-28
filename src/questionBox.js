@@ -132,6 +132,8 @@ export default QuestionBoxScreen = () => {
     const [camera, setShowCamera] = useState(false);
     const [hasPermission, setHasPermission] = useState(null);
     //aşağısı kamera dışındakiler için
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [selectedClassDegree, setSelectedClassDegree] = useState(null);
     const [comment, setComment] = useState(null);
 
     useEffect(() => {
@@ -150,49 +152,75 @@ export default QuestionBoxScreen = () => {
 
     // aşağısı kamera dışındaki alan için
 
+    const handleCourseSelection = (course) => {
+        setSelectedCourse(course);
+    };
+
+    const handleClassSelection = (course) => {
+        setSelectedClassDegree(course);
+    };
+
     const handleSendQuestion = () => {
         // function to handle sending question to server
-        // comment, imageText
-        console.log("send Reply");       
+        // comment, imageText, selectedCourse
+        console.log(imageText);
+        sendQuestion({
+            //comment: comment,
+            question: image,
+            branch: selectedCourse,
+            //class: 11
+        })
+        .then(result => {
+            if (result.status == 201) {
+              console.log('Question sent');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });        
     };  
 
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}> 
-            <View style={styles.tableRow}>
-                <View style={styles.tableCell}>
-                <Text style={styles.text1}>Class of Question</Text>
-                </View>
-                <View style={styles.tableCell}>
-                <Text style={styles.text2}>Middle School</Text>
-                </View>
-            </View>
-            <View style={styles.separator} />
-            <View style={styles.tableRow}>
-                <View style={styles.tableCell}>
-                <Text style={styles.text1}>Lesson of Question</Text>
-                </View>
-                <View style={styles.tableCell}>
-                <Text style={styles.text2}>Mathematic</Text>
-                </View>
-            </View>
-            <Image
-                source={require("../assets/questionGeo3.png")}
-                style={styles.image}
-                resizeMode="cover"
-            />
-            <Text style={styles.subTitle}>Take of photo answer of question</Text>        
+            <Text style={styles.subTitle}>Define class of question</Text>
+            <View style={styles.container}>
+                {["Primary School", "Middle School", "High School"].map((classDegree, index) => (
+                    <View style={styles.buttonContainer} key={index}>
+                    <TouchableOpacity 
+                        style={selectedClassDegree === classDegree ? styles.selectedCourse : styles.course}
+                        onPress={() => handleClassSelection(classDegree)}
+                    >
+                        <Text style={styles.text}>{classDegree}</Text>
+                    </TouchableOpacity>
+                    </View>
+                ))}
+            </View>       
+            <Text style={styles.subTitle}>Define lesson of question</Text>
+            <View style={styles.container}>
+                {["BIOLOGY", "PHYSICS", "TURKISH", "CHEMISTRY", "MATH", "ENGLISH"].map((course, index) => (
+                    <View style={styles.buttonContainer} key={index}>
+                    <TouchableOpacity 
+                        style={selectedCourse === course ? styles.selectedCourse : styles.course}
+                        onPress={() => handleCourseSelection(course)}
+                    >
+                        <Text style={styles.text}>{course}</Text>
+                    </TouchableOpacity>
+                    </View>
+                ))}
+            </View>   
+            <Text style={styles.subTitle}>Take of photo for question</Text>        
             <View style={{
                     backgroundColor: "#eeee",
                     width: 120,
                     height: 120,
                     borderRadius: 100,
                     marginBottom: 2,
-                    marginTop: 2,
+                    marginTop: 10,
                 }}>
                 <Image source={{ uri: image }} style={{ width: 120, height: 120, borderRadius: 20 }}/>
             </View>
             <Button
-                style={{ width: "30%", marginTop: 5 }}
+                style={{ width: "30%", marginTop: 12 }}
                 icon="camera"
                 mode="contained"
                 onPress={() => {
@@ -216,48 +244,19 @@ export default QuestionBoxScreen = () => {
                 />
             </View>   
             <TouchableOpacity onPress={() => handleSendQuestion()} style={styles.sendButton}>
-                <Text style={styles.sendButtonText}>Send Answer</Text>
+                <Text style={styles.sendButtonText}>Send Question</Text>
             </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    tableRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 7,
-    },
-    tableCell: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    text1: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    text2: {
-        fontSize: 16,
-    },
-    separator: {
-        height: 1,
-        backgroundColor: '#9999CC',
-        width: '85%',
-        marginBottom: 8,
-    },
-    image: {
-        width: 330,
-        height:  200,
-        marginBottom: 10, 
-        marginTop: 8
-    },
     container: {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 0,
-        flex: 1
+        marginBottom: 0
     },
     subTitle: {
       fontSize: 16,
@@ -265,6 +264,10 @@ const styles = StyleSheet.create({
       marginBottom: 8,
       marginTop: 5,
       color: '#9999CC',
+    },
+    courseSelectionText: {
+      fontSize: 16,
+      marginBottom: 8,
     },
     commentContainer: {
       marginBottom: 20,   
@@ -276,8 +279,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#E0E0E0',
       paddingHorizontal: 70,
       paddingTop: 8,
-      marginBottom: 2,
-      marginTop:15
+      marginBottom: 8,
+      marginTop:20
     },
     sendButton: {
       backgroundColor: '#7F85EB',
@@ -289,6 +292,29 @@ const styles = StyleSheet.create({
       color: 'white',
       fontWeight: 'bold',
       fontSize: 16,
+    },
+    buttonContainer: {
+        width: '30%',
+        height: 50,
+        padding: 5,
+    },
+    course: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "#000",
+        borderRadius: 7,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    selectedCourse: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: "#000",
+        borderRadius: 7,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#7389B9',
+        color: '#FFFFFF'
     },
     text: {
         color: "#000",

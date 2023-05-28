@@ -7,7 +7,6 @@ import Splash from "../splash";
 import Welcome from "../welcome";
 import ChatDetailScreen from "../chatDetail";
 import HelpScreen from '../help';
-import ApplyBranch from '../applyBranch';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +20,6 @@ const Routers = () => {
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="ChatDetail" component={ChatDetailScreen} />
       <Stack.Screen name="Help" component={HelpScreen}/>
-      <Stack.Screen name="ApplyBranch" component={ApplyBranch}/>
     </Stack.Navigator>
   );
 };
