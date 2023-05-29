@@ -28,6 +28,7 @@ export default RegisterScreen = (props) => {
 
   const onRegisterPress = () => {
     console.log("register go to api.");
+    console.log(email+"*"+password+"*"+FirstName+"*"+LastName+"*"+NickName);
     register({
       username: email,
       password: password,
@@ -41,6 +42,8 @@ export default RegisterScreen = (props) => {
         console.log("kaydediyor");
         AsyncStorage.setItem('token', result.data.jwtToken);
         navigation.navigate('Welcome');
+      }else{
+        console.log("come from api");
       }
     })
     .catch(err => {

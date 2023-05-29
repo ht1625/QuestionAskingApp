@@ -35,6 +35,7 @@ export const profile = async () => {
     }
 };
 export const register = async (data) => {
+  console.log("deneme");
   try {
     const result = await ApiManager('/user/signup', {
       method: 'POST',

@@ -8,11 +8,31 @@ class WebSocketClient {
   
       console.log('WebSocketClient initialized!');
     }
+
+    connect(token) {
+      this.client = new WebSocket(this.url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      this.send(token)
+      this.client.onmessage = this.onMessage;
+      this.client.onerror = (err) =>
+        console.log('Error while connecting to the server: ' + err);
+      console.log(token)
+      console.log('WebSocketClient connected!');
+    }
   
     send(message) {
-      if (this.client && this.client.readyState === this.client.OPEN)
-        this.client.send(JSON.stringify(message));
-      else console.log('Could not send message: ', message);
+      if (this.client && this.client.readyState === this.client.OPEN) {
+        const messagePayload = {
+          type: 'private',
+          content: message,
+        };
+        this.client.send(JSON.stringify(messagePayload));
+      } else {
+        console.log('Could not send message: ', message);
+      }
     }
   
     onMessage = (message) => {
