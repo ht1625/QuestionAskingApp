@@ -6,6 +6,7 @@ import TabScreen from "../tab";
 import Splash from "../splash";
 import Welcome from "../welcome";
 import ChatDetailScreen from "../chatDetail";
+import ChatScreen from "../chat";
 import HelpScreen from '../help';
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +20,7 @@ const Routers = () => {
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="ChatDetail" component={ChatDetailScreen} />
+      <Stack.Screen name="Chat" component={ChatScreen} />
       <Stack.Screen name="Help" component={HelpScreen}/>
     </Stack.Navigator>
   );

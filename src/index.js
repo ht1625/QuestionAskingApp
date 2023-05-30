@@ -4,4 +4,5 @@ import HomepageScreen from "./homepage";
 import Splash from "./splash";
 import Welcome from "./welcome";
 import ApplyBranch from "./applyBranch";
-export {Splash, LoginScreen, HomepageScreen,RegisterScreen,Welcome,ApplyBranch};
+import TabScreen from "./tab";
+export {Splash, LoginScreen, HomepageScreen,RegisterScreen,Welcome,ApplyBranch,TabScreen};

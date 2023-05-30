@@ -12,6 +12,7 @@ import { Camera } from "expo-camera";
 import { Button } from "react-native-paper";
 import {sendQuestion} from '../src/api/sendQuestion';
 import * as ImageManipulator from 'expo-image-manipulator';
+import { useNavigation } from "@react-navigation/native";
 
 const CameraModule = (props) => {
     const [cameraRef, setCameraRef] = useState(null);
@@ -73,6 +74,8 @@ const CameraModule = (props) => {
                                     // finish
                                     props.setImage(photo);
                                     props.setImageText(resizedPhoto);
+                                    //console.log(photo.uri);
+                                    props.setImageUri(resizedPhoto.uri);
                                     props.setModalVisible();
                                 }
                             }}
@@ -125,16 +128,18 @@ const CameraModule = (props) => {
     );
 };
 
-export default QuestionBoxScreen = () => {
+export default QuestionBoxScreen = (props) => {
 
     const [image, setImage] = useState('https://img.icons8.com/dusk/512w/camera--v1.png');
     const [imageText, setImageText] = useState(null);
+    const [imageUri, setImageUri] = useState(null);
     const [camera, setShowCamera] = useState(false);
     const [hasPermission, setHasPermission] = useState(null);
     //aşağısı kamera dışındakiler için
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [selectedClassDegree, setSelectedClassDegree] = useState(null);
     const [comment, setComment] = useState(null);
+    const navigation = useNavigation();
 
     useEffect(() => {
         (async () => {
@@ -163,21 +168,41 @@ export default QuestionBoxScreen = () => {
     const handleSendQuestion = () => {
         // function to handle sending question to server
         // comment, imageText, selectedCourse
-        console.log(imageText);
+        console.log(imageUri);
+        
+        let imgData = {
+            name: 'husniyeQuestion',
+            type: 'image/jpeg',
+            uri: imageUri
+        }
+        console.log(imgData);
         sendQuestion({
-            //comment: comment,
-            question: image,
+            comment: comment,
+            question: imgData,
             branch: selectedCourse,
-            //class: 11
+            class: 11
         })
         .then(result => {
             if (result.status == 201) {
               console.log('Question sent');
+              console.log(result.data.status);
+              setComment(null);
+              setImage('https://img.icons8.com/dusk/512w/camera--v1.png');
+              setSelectedClassDegree(null);
+              setSelectedCourse(null);
+              if(result.data.status == "PENDING"){
+                console.log("ı am going");
+                navigation.navigate('Home');
+              }else{
+                navigation.navigate('Chat');
+              }
+            }else{
+                console.log(result);
             }
         })
         .catch(err => {
             console.error(err);
-        });        
+        });    
     };  
 
     return (
@@ -232,6 +257,7 @@ export default QuestionBoxScreen = () => {
                     setModalVisible={() => setShowCamera(false)}
                     setImage={(result) => setImage(result.uri)}
                     setImageText={(result) => setImageText(result.base64)}
+                    setImageUri={(uri) => setImageUri(uri)}
                 />
             )}     
             <View style={styles.commentContainer}>

@@ -79,7 +79,7 @@ const sortedMessages = MOCK_MESSAGES.sort((a, b) => b._id - a._id);
 
 const ChatRoom = (props) => {
 
-  const { chatId, userId } = props.route.params;
+  const { chatId, userId, usernameRec } = props.route.params;
   const [messages, setMessages] = useState(sortedMessages);
   const [token, setToken] = useState('');
   const [username, setUsername] = useState('');
@@ -131,7 +131,8 @@ const ChatRoom = (props) => {
           _id: user._id,
           name: user.name,
           token: token,
-          receiver :"husniye@gmail.com"
+          receiver : usernameRec,
+          chatId: chatId,
         },
       };
     });

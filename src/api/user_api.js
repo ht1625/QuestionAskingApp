@@ -53,4 +53,22 @@ export const logout = async () => {
     await AsyncStorage.removeItem("token");
     console.log("logged out");
 };
+export const getChat = async () => {
+  let token = await AsyncStorage.getItem('token');
+  console.log('giden token: '+token)
+   try{
 
+       const result = await ApiManager('/chat/chats',{
+           method: 'GET',
+           headers: {
+               'content-type': 'application/json',
+               'Authorization': 'Bearer '+ token,
+           },
+       });
+
+       return result;
+   }
+   catch(error){
+     return  error.response.data;
+   }
+};

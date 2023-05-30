@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ContactRow from './components/contactRow';
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons';
-
+import {getChat} from '../src/api/user_api';
 import { Buffer } from "buffer";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -40,22 +40,36 @@ const ChatScreen = (props) => {
 
     const [userId, setUserId] = useState('');
     const [token, setToken] = useState('');
-
+    const [chatArr, setChatArr] = useState(''); 
     const navigation = useNavigation();
 
-    useEffect(() => {
-        const getTokenAsync = async () => {
-            let token = await AsyncStorage.getItem('token');
-            setToken(token);
-            const decodedToken = parseJwt(token);
-            setUserId(decodedToken.user_id);
-            console.log("lkjfkdsjg")
-            console.log("dkflksdlşfkşs"+userId);
-            
-        };
-      
+    const getTokenAsync = async () => {
+        let token = await AsyncStorage.getItem('token');
+        setToken(token);
+        const decodedToken = parseJwt(token);
+        setUserId(decodedToken.user_id);
+        setToken(decodedToken);
+    };
+
+    useEffect(() => { 
+        console.log("start");
         getTokenAsync();
+        console.log(userId);
+        getChats();
+        console.log("///////***");
+        console.log(chatArr);
+        console.log("**/////*");
     }, []);
+
+    const getChats = () => {
+        console.log("getChats");
+        getChat().then(result => {
+            setChatArr(result.data);
+            console.log("GetChatFromAPi");
+        }).catch(error => {
+            console.log('Hata:', error);
+        });
+    }
     
     const parseJwt = (token) => {
         const parts = token.split('.').map((part) =>
@@ -67,14 +81,14 @@ const ChatScreen = (props) => {
 
     return (
         <SafeAreaView>
-            {chats.map((index) => (
+            {chatArr.map((index) => (
                 <React.Fragment>
-                    <React.Fragment key={index}>
+                    <React.Fragment key={index.id}>
                         <ContactRow
-                            name={index.nameLecturer}
-                            subtitle={index.messages}
+                            name={index.user.username}
+                            subtitle={index.createdAt}
                             onPress={() => {
-                                navigation.navigate('ChatDetail',{chatId: 'deneme',userId:userId});
+                                navigation.navigate('ChatDetail',{chatId: index.id,userId:userId,usernameRec:index.username});
                             }}
                             icon={<Ionicons name="person-outline" size={24} color="red" />} // İkonun rengini kırmızı olarak ayarladık
                         />
