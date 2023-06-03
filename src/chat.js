@@ -81,14 +81,18 @@ const ChatScreen = (props) => {
 
     return (
         <SafeAreaView>
-            {chatArr.map((index) => (
+            {chats.map((index) => (
                 <React.Fragment>
-                    <React.Fragment key={index.id}>
+                    <React.Fragment key="{index.id}">
+                        
                         <ContactRow
-                            name={index.user.username}
-                            subtitle={index.createdAt}
+                            name="{index.user.username}"
+                            
+                            subtitle="{index.createdAt}"
                             onPress={() => {
-                                navigation.navigate('ChatDetail',{chatId: index.id,userId:userId,usernameRec:index.username});
+                                navigation.navigate('ChatDetail',{chatId: index.id,userId:userId, usernameRec:index.user.username});
+                                
+                                console.log(index.user.username)
                             }}
                             icon={<Ionicons name="person-outline" size={24} color="red" />} // İkonun rengini kırmızı olarak ayarladık
                         />
