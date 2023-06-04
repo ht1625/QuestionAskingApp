@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 class WebSocketClient {
   constructor(url) {
     this.url = url;
@@ -7,13 +9,24 @@ class WebSocketClient {
     console.log('WebSocketClient initialized!');
   }
 
-  connect(token) {
+  async connect(token) {
     const urlWithToken = `${this.url}?token=${encodeURIComponent(token)}`;
     this.client = new WebSocket(urlWithToken);
 
     this.client.onopen = () => {
       console.log('WebSocketClient connected!');
     };
+
+    // AsyncStorage'den chatId'yi al.
+    try {
+      const value = await AsyncStorage.getItem('@chatID');
+      if(value !== null) {
+        this.chatID = value; // Eğer bir değer alındıysa, bu değeri chatId'ye ata.
+      }
+    } catch(e) {
+      // Hata durumunda bir mesaj logla.
+      console.log("Error while getting the chatId: ", e);
+    }
 
     this.client.onmessage = this.onMessage;
     this.client.onerror = (err) =>
@@ -29,12 +42,19 @@ class WebSocketClient {
   }
 
   onMessage = (message) => {
-    const messagePayload = JSON.parse(message.data);
-    console.log('Received message from the server: ', messagePayload);
+    let messagePayload = JSON.parse(message.data);
+    //console.log('Received message from the server: ', messagePayload);
 
-    if (this.onReceiveMessage) this.onReceiveMessage(messagePayload);
+    console.log("*******start**********");
+    console.log("store:"+this.chatID);
+    console.log('message:' , messagePayload.chatId);
+    console.log("*******finish**********");
+
+    if (this.chatID && this.chatID === messagePayload.chatId) {
+      if (this.onReceiveMessage) this.onReceiveMessage(messagePayload);
+    }
   };
-s
+
   close = () => {
     this.client.close();
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, SafeAreaView, StyleSheet } from 'react-native';
+import { View, SafeAreaView, StyleSheet,Text } from 'react-native';
 import { useEffect, useState } from "react";
 import ContactRow from './components/contactRow';
 import { useNavigation } from "@react-navigation/native";
@@ -81,27 +81,27 @@ const ChatScreen = (props) => {
 
     return (
         <SafeAreaView>
-            {chats.map((index) => (
-                <React.Fragment>
-                    <React.Fragment key="{index.id}">
-                        
-                        <ContactRow
-                            name="{index.user.username}"
-                            
-                            subtitle="{index.createdAt}"
-                            onPress={() => {
-                                navigation.navigate('ChatDetail',{chatId: index.id,userId:userId, usernameRec:index.user.username});
-                                
-                                console.log(index.user.username)
-                            }}
-                            icon={<Ionicons name="person-outline" size={24} color="red" />} // İkonun rengini kırmızı olarak ayarladık
-                        />
-                        <View style={styles.seperator} />
-                    </React.Fragment>
-
-                </React.Fragment>
-            ))}
-
+        {chatArr.length === 0 ? (
+            <View style={{ padding: 20, flexDirection: 'row' }}>
+                <Ionicons name="chatbubbles-outline" size={30} color="lightgray" />
+                <Text style={styles.emptyText}>There are no chats to display.</Text>
+            </View>
+        ) : (
+            chatArr.map((index) => (
+            <React.Fragment key={index.id}>
+                <ContactRow
+                name={index.user.username}
+                subtitle={index.createdAt}
+                onPress={() => {
+                    navigation.navigate('ChatDetail', {chatId: index.id, userId:userId, usernameRec:index.user.username});
+                    console.log(index.user.username)
+                }}
+                icon={<Ionicons name="person-outline" size={24} color="red" />}
+                />
+                <View style={styles.seperator} />
+            </React.Fragment>
+            ))
+        )}
         </SafeAreaView>
     )
 }
@@ -112,6 +112,10 @@ const styles = StyleSheet.create({
         height: StyleSheet.hairlineWidth,
         backgroundColor: '#E2E2E2',
         marginStart: 16
-    }
+    },
+    emptyText: {
+        fontSize: 20,
+        color: 'darkgray',
+      },
 })
 export default ChatScreen;

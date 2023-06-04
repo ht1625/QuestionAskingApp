@@ -30,7 +30,17 @@ const ChatRoom = (props) => {
     };
 
     getTokenAsync();
+    storeChatId(chatId);
   }, []);
+
+  const storeChatId = async (chatId) => {
+    try {
+      await AsyncStorage.setItem('@chatID', chatId)
+    } catch (e) {
+      // saving error
+      console.log("error verdi");
+    }
+  }
 
   const parseJwt = (token) => {
     const parts = token.split('.').map((part) =>
