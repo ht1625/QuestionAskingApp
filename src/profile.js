@@ -25,6 +25,7 @@ const ProfileScreen = () => {
         profile().then(result => {
           console.log(result.data);
           setStudentData(result.data);
+          console.log(studentData);
         }).catch(error => {
           console.log('Hata:', error);
         });
@@ -38,7 +39,7 @@ const ProfileScreen = () => {
                 <ProfileTableRow title="Last Name" value='Erick' />
                 <ProfileTableRow title="Nick Name" value='MathPro' />
                 <ProfileTableRow title="Phone Number" value='+90 555 555 5555' />
-                <ProfileTableRow title="Email" value='erick@gmail.com' />
+                <ProfileTableRow title="Email" value={studentData.username} />
                 <ProfileTableRow title="Grade" value='HighSchool' />
                 <ProfileTableRow title="Question Count" value='15' />
             </View>
