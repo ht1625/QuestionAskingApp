@@ -1,5 +1,5 @@
 import React from "react";
-import { View, SafeAreaView, StyleSheet,Text } from 'react-native';
+import { Image,View, SafeAreaView, StyleSheet,Text } from 'react-native';
 import { useEffect, useState } from "react";
 import ContactRow from './components/contactRow';
 import { useNavigation } from "@react-navigation/native";
@@ -7,35 +7,6 @@ import { Ionicons } from '@expo/vector-icons';
 import {getChat} from '../src/api/user_api';
 import { Buffer } from "buffer";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const chats = [
-    {
-        users: ["a@gmail.com", "b@gmail.com"],
-        messages: 'Okay',
-        nameLecturer: 'Jessica',
-    },
-    {
-        users: ["a@gmail.com", "b@gmail.com"],
-        messages: 'Thank you',
-        nameLecturer: 'Monica'
-    },
-    {
-        users: ["a@gmail.com", "b@gmail.com"],
-        messages: 'I dont get it',
-        nameLecturer: 'Sue'
-    },
-    {
-        users: ["a@gmail.com", "b@gmail.com"],
-        messages: 'No, I dont',
-        nameLecturer: 'Barney'
-    },
-    {
-        users: ["a@gmail.com", "b@gmail.com"],
-        messages: 'I dont have any question.',
-        nameLecturer: 'Joe'
-    }
-]
-
 const ChatScreen = (props) => {
 
     const [userId, setUserId] = useState('');
@@ -54,18 +25,19 @@ const ChatScreen = (props) => {
     useEffect(() => { 
         console.log("start");
         getTokenAsync();
-        console.log(userId);
         getChats();
-        console.log("///////***");
-        console.log(chatArr);
-        console.log("**/////*");
+      
     }, []);
 
     const getChats = () => {
         console.log("getChats");
         getChat().then(result => {
-            setChatArr(result.data);
+            if(result.data != null ){
+                setChatArr(result.data);
+
+            }
             console.log("GetChatFromAPi");
+            console.log(result.data);
         }).catch(error => {
             console.log('Hata:', error);
         });
@@ -82,10 +54,11 @@ const ChatScreen = (props) => {
     return (
         <SafeAreaView>
         {chatArr.length === 0 ? (
-            <View style={{ padding: 20, flexDirection: 'row' }}>
-                <Ionicons name="chatbubbles-outline" size={30} color="lightgray" />
-                <Text style={styles.emptyText}>There are no chats to display.</Text>
-            </View>
+          <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <Image style={styles.image} source={require('../assets/images/waiting.gif')} />
+          </View>
+        </View>
         ) : (
             chatArr.map((index) => (
             <React.Fragment key={index.id}>
@@ -117,5 +90,18 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'darkgray',
       },
+      container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      imageContainer: {
+        alignItems: 'center',
+      },
+      image: {
+        width: 300,
+        height: 300,
+      },
+    
 })
 export default ChatScreen;
