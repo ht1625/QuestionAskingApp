@@ -54,11 +54,13 @@ const ChatScreen = (props) => {
     return (
         <SafeAreaView>
         {chatArr.length === 0 ? (
-          <View style={styles.container}>
-          <View style={styles.imageContainer}>
-            <Image style={styles.image} source={require('../assets/images/waiting.gif')} />
-          </View>
-        </View>
+         <View style={styles.container}>
+         <View style={styles.imageContainer}>
+           <Image style={styles.image} source={require('../assets/images/waiting.gif')} />
+           <Text style={styles.emptyText}>There are no chats to display.</Text>
+         </View>
+        
+       </View>
         ) : (
             chatArr.map((index) => (
             <React.Fragment key={index.id}>
@@ -85,10 +87,10 @@ const styles = StyleSheet.create({
         height: StyleSheet.hairlineWidth,
         backgroundColor: '#E2E2E2',
         marginStart: 16
-    },
-    emptyText: {
+      },
+      emptyText: {
         fontSize: 20,
-        color: 'darkgray',
+        color: 'black',
       },
       container: {
         flex: 1,
@@ -101,6 +103,7 @@ const styles = StyleSheet.create({
       image: {
         width: 300,
         height: 300,
+        marginTop: 200
       },
     
 })
