@@ -130,7 +130,7 @@ const CameraModule = (props) => {
 
 export default QuestionBoxScreen = (props) => {
 
-    const [image, setImage] = useState('https://img.icons8.com/dusk/512w/camera--v1.png');
+    const [image, setImage] = useState('https://i.pinimg.com/564x/c6/e4/0a/c6e40a5df32c39c558aca190010df229.jpg');
     const [imageText, setImageText] = useState(null);
     const [imageUri, setImageUri] = useState(null);
     const [camera, setShowCamera] = useState(false);
@@ -187,7 +187,7 @@ export default QuestionBoxScreen = (props) => {
               console.log('Question sent');
               console.log(result.data.status);
               setComment(null);
-              setImage('https://img.icons8.com/dusk/512w/camera--v1.png');
+              setImage('https://i.pinimg.com/564x/c6/e4/0a/c6e40a5df32c39c558aca190010df229.jpg');
               setSelectedClassDegree(null);
               setSelectedCourse(null);
               if(result.data.status == "PENDING"){
@@ -215,7 +215,7 @@ export default QuestionBoxScreen = (props) => {
                         style={selectedClassDegree === classDegree ? styles.selectedCourse : styles.course}
                         onPress={() => handleClassSelection(classDegree)}
                     >
-                        <Text style={styles.text}>{classDegree}</Text>
+                        <Text style={selectedClassDegree === classDegree ? styles.selectedText : styles.text}>{classDegree}</Text>
                     </TouchableOpacity>
                     </View>
                 ))}
@@ -228,7 +228,7 @@ export default QuestionBoxScreen = (props) => {
                         style={selectedCourse === course ? styles.selectedCourse : styles.course}
                         onPress={() => handleCourseSelection(course)}
                     >
-                        <Text style={styles.text}>{course}</Text>
+                        <Text style={selectedCourse === course ? styles.selectedText : styles.text}>{course}</Text>
                     </TouchableOpacity>
                     </View>
                 ))}
@@ -245,7 +245,7 @@ export default QuestionBoxScreen = (props) => {
                 <Image source={{ uri: image }} style={{ width: 120, height: 120, borderRadius: 20 }}/>
             </View>
             <Button
-                style={{ width: "30%", marginTop: 12 }}
+                style={{ width: "30%", marginTop: 12, backgroundColor: '#8D8DCD' }}
                 icon="camera"
                 mode="contained"
                 onPress={() => {
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
       marginTop:20
     },
     sendButton: {
-      backgroundColor: '#7F85EB',
+      backgroundColor: '#5F5FC6',
       paddingHorizontal: 16,
       paddingVertical: 10,
       borderRadius: 4,
@@ -327,24 +327,28 @@ const styles = StyleSheet.create({
     course: {
         flex: 1,
         borderWidth: 1,
-        borderColor: "#000",
-        borderRadius: 7,
+        borderColor: "#f2f4f3",
+        backgroundColor: '#E0E0E0',
+        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },
     selectedCourse: {
         flex: 1,
         borderWidth: 1,
-        borderColor: "#000",
-        borderRadius: 7,
+        borderColor: "#f2f4f3",
+        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#7389B9',
+        backgroundColor: '#9999CC',
         color: '#FFFFFF'
     },
     text: {
-        color: "#000",
+        color: "#8f9190",
     },
+    selectedText: {
+        color: '#FFFFFF'
+    }
 });
     
     

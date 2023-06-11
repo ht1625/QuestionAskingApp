@@ -152,7 +152,7 @@ const ChatScreen = (props) => {
         {chatArr.length === 0 ? (
             <View style={styles.container}>
                 <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={require('../assets/images/preview2.png')} />
+                    <Image style={styles.image} source={require('../assets/images/preview3.png')} />
                 </View>
             </View>
         ) : (
