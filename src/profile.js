@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
-import {profile} from '../src/api/user_api';
+import { profile } from '../src/api/user_api';
 import { useEffect, useState } from 'react';
 
 const ProfileTableRow = ({ title, value }) => {
@@ -17,31 +17,38 @@ const ProfileTableRow = ({ title, value }) => {
 };
 
 const ProfileScreen = () => {
-
-    const [studentData, setStudentData] = useState(''); 
+    const [studentData, setStudentData] = useState({});
 
     useEffect(() => {
         console.log('data çekmeye hazırlanıyor...');
         profile().then(result => {
-          console.log(result.data);
-          setStudentData(result.data);
-          console.log(studentData);
+            console.log(result.data);
+            setStudentData(result.data);
+            console.log(studentData);
         }).catch(error => {
-          console.log('Hata:', error);
+            console.log('Hata:', error);
         });
-    }, []);   
+    }, []);
 
     return (
         <View style={styles.container}>
             <View style={styles.profile}>
                 <Image source={require("../assets/images/student.png")} style={styles.profileImage} />
-                <ProfileTableRow title="First Name" value={studentData.name} />
-                <ProfileTableRow title="Last Name" value={studentData.surname} />
-                <ProfileTableRow title="Nick Name" value={studentData.nickname} />
-                <ProfileTableRow title="Email" value={studentData.username} />
-                <ProfileTableRow title="Question Count" value={studentData.questionCounts.questionCount} />
-                <ProfileTableRow title="Solved Questions" value={studentData.questionCounts.solvedQuestions} />
-                <ProfileTableRow title="Not Solved Questions" value={studentData.questionCounts.notSolvedQuestions} />
+                {studentData && (
+                    <>
+                        <ProfileTableRow title="First Name" value={studentData.name} />
+                        <ProfileTableRow title="Last Name" value={studentData.surname} />
+                        <ProfileTableRow title="Nick Name" value={studentData.nickname} />
+                        <ProfileTableRow title="Email" value={studentData.username} />
+                        {studentData.questionCounts && (
+                            <>
+                                <ProfileTableRow title="Question Count" value={studentData.questionCounts.questionCount} />
+                                <ProfileTableRow title="Solved Questions" value={studentData.questionCounts.solvedQuestions} />
+                                <ProfileTableRow title="Not Solved Questions" value={studentData.questionCounts.notSolvedQuestions} />
+                            </>
+                        )}
+                    </>
+                )}
             </View>
         </View>
     );
