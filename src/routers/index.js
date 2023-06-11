@@ -8,6 +8,7 @@ import Welcome from "../welcome";
 import ChatDetailScreen from "../chatDetail";
 import ChatScreen from "../chat";
 import HelpScreen from '../help';
+import QuestionBoxScreen from '../questionBox';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const Routers = () => {
       <Stack.Screen name="ChatDetail" component={ChatDetailScreen} />
       <Stack.Screen name="Chat" component={ChatScreen} />
       <Stack.Screen name="Help" component={HelpScreen}/>
+      <Stack.Screen name="QuestionBoxScreen" component={QuestionBoxScreen}/>
     </Stack.Navigator>
   );
 };

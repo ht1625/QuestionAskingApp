@@ -27,7 +27,7 @@ export default LoginScreen = (props) => {
     user_login({
       username: username.toLocaleLowerCase(),
       password: password,
-      appType: "LECTURER"
+      appType: "STUDENT"
     })
     .then(result => {
       if (result.status == 201) {

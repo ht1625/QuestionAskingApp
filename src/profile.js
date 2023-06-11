@@ -34,14 +34,14 @@ const ProfileScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.profile}>
-                <Image source={{ uri: 'https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=' }} style={styles.profileImage} />
-                <ProfileTableRow title="First Name" value='John' />
-                <ProfileTableRow title="Last Name" value='Erick' />
-                <ProfileTableRow title="Nick Name" value='MathPro' />
-                <ProfileTableRow title="Phone Number" value='+90 555 555 5555' />
+                <Image source={require("../assets/images/student.png")} style={styles.profileImage} />
+                <ProfileTableRow title="First Name" value={studentData.name} />
+                <ProfileTableRow title="Last Name" value={studentData.surname} />
+                <ProfileTableRow title="Nick Name" value={studentData.nickname} />
                 <ProfileTableRow title="Email" value={studentData.username} />
-                <ProfileTableRow title="Grade" value='HighSchool' />
-                <ProfileTableRow title="Question Count" value='15' />
+                <ProfileTableRow title="Question Count" value={studentData.questionCounts.questionCount} />
+                <ProfileTableRow title="Solved Questions" value={studentData.questionCounts.solvedQuestions} />
+                <ProfileTableRow title="Not Solved Questions" value={studentData.questionCounts.notSolvedQuestions} />
             </View>
         </View>
     );

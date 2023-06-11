@@ -20,7 +20,7 @@ export const profile = async () => {
    console.log('giden token: '+token)
     try{
 
-        const result = await ApiManager('/user/profile',{
+        const result = await ApiManager('/student/profile',{
             method: 'GET',
             headers: {
                 'content-type': 'application/json',
@@ -33,6 +33,33 @@ export const profile = async () => {
     catch(error){
       return  error.response.data;
     }
+};
+export const getMessage = async (data) => {
+  let token = await AsyncStorage.getItem('token');
+  console.log('giden token: (Message) '+token)
+
+  console.log(data);
+
+  const formData = new FormData();
+  formData.append('chat-id', data.chatId);
+   try{
+
+       const result = await ApiManager('/chat/messages',{
+           method: 'GET',
+           headers: {
+            //'content-type': 'multipart/form-data',
+            'Authorization': 'Bearer '+ token,
+           },
+           params: {
+            'chat-id': data.chatId
+           }
+       });
+
+       return result;
+   }
+   catch(error){
+     return  error.response.data;
+   }
 };
 export const register = async (data) => {
   console.log("deneme");
@@ -49,9 +76,46 @@ export const register = async (data) => {
     return error.response.data;
   }
 };
+export const closeChat = async (data) => {
+  console.log("close chat");
+  let token = await AsyncStorage.getItem('token');
+  console.log('giden token: (Message) '+token)
+  try {
+    const result = await ApiManager('/student/comment', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': 'Bearer '+ token,
+      },
+      data: data,
+    });
+    return result;
+  } catch (error) {
+    return error.response.data;
+  }
+};
 export const logout = async () => {
     await AsyncStorage.removeItem("token");
     console.log("logged out");
+};
+export const getStateOfQuestion = async () => {
+  let token = await AsyncStorage.getItem('token');
+  console.log('giden token: '+token)
+   try{
+
+       const result = await ApiManager('/student/questions',{
+           method: 'GET',
+           headers: {
+               'content-type': 'application/json',
+               'Authorization': 'Bearer '+ token,
+           },
+       });
+
+       return result;
+   }
+   catch(error){
+     return  error.response.data;
+   }
 };
 export const getChat = async () => {
   let token = await AsyncStorage.getItem('token');
