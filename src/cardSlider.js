@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'transparent',
-    width: 350,
+    width: width - 40,
   },
   iconContainer: {
     position: 'absolute',
