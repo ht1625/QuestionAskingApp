@@ -24,7 +24,7 @@ export default welcome = (props) => {
                       <Image style={{ width: 300, height: 300 }} source={require('../assets/images/confetti.gif')} />
                           <View style={{ alignItems: "center" }}>
                              <Text style={{ fontSize: 18, color: whiteColor, }}>Her şey hazır!</Text>
-                             <Text style={{ fontSize: 18, color: whiteColor }}>QueX’le soru çözmeye başla!</Text>
+                             <Text style={{ fontSize: 18, color: whiteColor }}>Soru çözmeye başla!</Text>
                          </View>
                     </View>
                     <Button title="Başla" onPress={() => navigation.navigate("Tab")} titleStyle={{ color: darkPurple, fontFamily: "Nunito-Bold" }} buttonStyle={{ backgroundColor: whiteColor }} containerStyle={{ backgroundColor: whiteColor, width: width * .6, paddingVertical: 5, alignSelf: "center", }} />
