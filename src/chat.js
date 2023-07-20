@@ -135,7 +135,7 @@ const ChatScreen = (props) => {
     return randomValue;
   }
 
-    const getMessagesAndRouteDetail = (chatId, userId, usernameRec, createdAt, lecturerId, status) =>{
+    const getMessagesAndRouteDetail = (chatId, userId, usernameRec, createdAt, lecturerId, status,lecturer2) =>{
         getMessages(chatId,usernameRec);
         console.log("****************mesajlar*************");
         console.log(messages);
@@ -144,7 +144,7 @@ const ChatScreen = (props) => {
         if(status == "CLOSED"){
             statusChat = false;
         }
-        navigation.navigate('ChatDetail', {chatId: chatId, userId:userId, usernameRec:usernameRec, defaultMessages: messages, createdAt: createdAt, lecturerId: lecturerId, statusChat: statusChat});
+        navigation.navigate('ChatDetail', {chatId: chatId, userId:userId, usernameRec:usernameRec, defaultMessages: messages, createdAt: createdAt, lecturerId: lecturerId, statusChat: statusChat,lecturer2: lecturer2});
     }
 
     return (
@@ -163,7 +163,7 @@ const ChatScreen = (props) => {
                 subtitle={index.createdAt}
                 onPress={() => {
                     //navigation.navigate('ChatDetail', {chatId: index.id, userId:userId, usernameRec:index.user.username});
-                    getMessagesAndRouteDetail(index.id, userId, index.user.username, index.createdAt, index.lecturerId, index.status);
+                    getMessagesAndRouteDetail(index.id, userId, index.user.username, index.createdAt, index.lecturerId, index.status,index.user.lecturer2);
                     //console.log(index.user.username)
                 }}
                 icon={<Ionicons name="person-outline" size={24} color="red" />}

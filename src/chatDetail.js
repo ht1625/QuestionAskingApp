@@ -22,7 +22,7 @@ const CloseChatButton = ({ onPress }) => {
 /* ---- */
 
 const ChatRoom = (props) => {
-  const { chatId, userId, usernameRec, defaultMessages, createdAt, lecturerId, statusChat } = props.route.params;
+  const { chatId, userId, usernameRec, defaultMessages, createdAt, lecturerId, statusChat,lecturer2 } = props.route.params;
   const [messages, setMessages] = useState(defaultMessages);
   const [token, setToken] = useState('');
   const [username, setUsername] = useState('');
@@ -166,10 +166,10 @@ const ChatRoom = (props) => {
   };
   const createComment = (comment) => {
     console.log('Seçilen yorum:', comment);
-    console.log(comment+lecturerId+"**"+chatId);
+    console.log(comment+lecturer2+"**"+chatId);
     closeChat({
       comment: comment,
-      lecturerId: lecturerId,
+      lecturerId: lecturer2,
       'chatId': chatId,
     })
     .then(result => {

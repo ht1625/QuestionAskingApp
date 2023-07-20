@@ -117,14 +117,14 @@ export default HomepageScreen = (props) => {
         return randomValue;
     }
 
-    const sendChatDetail = (chatId, lecturerId, studentId, status, question, branch, questionId) => {
+    const sendChatDetail = (chatId, lecturerId, studentId, status, question, branch, questionId,lecturer2) => {
         storeChatId(chatId);
         setUsernameSen(studentId);
         getMessages(chatId, lecturerId);
         console.log(lecturerId);
         console.log("////////////////");
         if (status == "SOLVED") {
-            navigation.navigate('ChatDetail', { chatId: chatId, userId: studentId, usernameRec: lecturerId, defaultMessages: messages });
+            navigation.navigate('ChatDetail', { chatId: chatId, userId: studentId, usernameRec: lecturerId, defaultMessages: messages, lecturer2:lecturer2});
         }
     }
 
@@ -193,7 +193,7 @@ export default HomepageScreen = (props) => {
                             return (
                                 <View style={{ justifyContent: "center", alignSelf: "center", padding: 10, paddingBottom: 0 }} key={card.questionId}>
                                     <TouchableOpacity onPress={() => {
-                                        sendChatDetail(card.chatId, card.lecturerUserName, card.studentId, card.status, card.question, card.branch, card.questionId);
+                                        sendChatDetail(card.chatId, card.lecturerUserName, card.studentId, card.status, card.question, card.branch, card.questionId,card.lecturer2);
                                     }}
                                         style={styles.questionContainer}>
                                         <View style={{ flexDirection: "row" }}>
